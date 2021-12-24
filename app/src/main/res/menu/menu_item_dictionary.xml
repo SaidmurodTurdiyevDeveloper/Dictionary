@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/open_item_dictionary_menu"
+        android:title="@string/text_open_item" />
+
+    <item
+        android:id="@+id/check_dictionary_menu"
+        android:title="@string/text_select" />
+
+    <item
+        android:id="@+id/update_dictionary_menu"
+        android:title="@string/text_update" />
+
+    <item
+        android:id="@+id/delete_dictionary_menu"
+        android:title="@string/text_delete" />
+
+</menu>

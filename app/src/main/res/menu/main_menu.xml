@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_nav_draw_main_menu"
+        android:icon="@drawable/ic_home_nav_draw_main_menu"
+        android:title="@string/text_Home" />
+    <item
+        android:id="@+id/change_language_nav_draw_main_menu"
+        android:icon="@drawable/ic_change_nav_draw_main_menu"
+        android:title="@string/text_ch_language" />
+    <item
+        android:id="@+id/game_nav_draw_main_menu"
+        android:icon="@drawable/ic__games_nav_draw_main_menu"
+        android:title="@string/text_game" />
+     <item
+        android:id="@+id/setting_nav_draw_main_menu"
+        android:icon="@drawable/ic_settings_nav_draw_main_menu"
+        android:title="@string/text_string" />
+    <item
+        android:id="@+id/arxiv_nav_draw_main_menu"
+        android:icon="@drawable/ic_arxive_nav_draw_main_menu"
+        android:title="@string/text_arxive" />
+    <item
+        android:id="@+id/app_info_nav_draw_main_menu"
+        android:icon="@drawable/ic_info_nav_draw_main_menu"
+        android:title="@string/text_info" />
+</menu>
