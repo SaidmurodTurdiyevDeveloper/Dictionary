@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dictionary.contracts.dictionary.ContractChooseLanguages
-import com.example.dictionary.data.model.DataCountry
 import com.example.dictionary.data.model.DataMoveCountry
 import com.example.dictionary.data.model.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,11 +16,11 @@ class ViewModelChooseCountry @Inject constructor(
     private var model: ContractChooseLanguages.Model
 ) : ContractChooseLanguages.ViewModel, ViewModel() {
 
-    private val _loadCountryOneLiveData = MediatorLiveData<Event<DataCountry>>()
-    val loadCountryOneLiveData: LiveData<Event<DataCountry>> get() = _loadCountryOneLiveData
+    private val _loadCountryOneLiveData = MediatorLiveData<Event<Int>>()
+    val loadCountryOneLiveData: LiveData<Event<Int>> get() = _loadCountryOneLiveData
 
-    private val _loadCountryTwoLiveData = MediatorLiveData<Event<DataCountry>>()
-    val loadCountryTwoLiveData: LiveData<Event<DataCountry>> get() = _loadCountryTwoLiveData
+    private val _loadCountryTwoLiveData = MediatorLiveData<Event<Int>>()
+    val loadCountryTwoLiveData: LiveData<Event<Int>> get() = _loadCountryTwoLiveData
 
     private val _openNextLiveData = MediatorLiveData<Event<Unit>>()
     val openNextLiveData: LiveData<Event<Unit>> get() = _openNextLiveData
@@ -36,49 +35,13 @@ class ViewModelChooseCountry @Inject constructor(
 
     init {
             viewModelScope.launch {
-
-            val countryOne = model.getCountryOne()
-            if (countryOne > 0) {
-                _loadCountryOneLiveData.postValue(Event(model.getCountryList()[countryOne]))
-            } else {
-                model.setCountryOne(0)
-                _loadCountryOneLiveData.postValue(Event(model.getCountryList()[0]))
+                _loadCountryOneLiveData.postValue(Event(model.getCountryOne()))
+                _loadCountryTwoLiveData.postValue(Event(model.getCountryTwo()))
             }
-            }
-         viewModelScope.launch {
-            val countryTwo = model.getCountryTwo()
-            if (countryTwo > 0) {
-                _loadCountryTwoLiveData.postValue(Event(model.getCountryList()[countryTwo]))
-            } else {
-                model.setCountryTwo(1)
-                _loadCountryTwoLiveData.postValue(Event(model.getCountryList()[1]))
-            }
-        }
-    }
-
-    override fun setCauntryOne(countryId: Int) {
-         viewModelScope.launch {
-            if (model.getCountryTwo() == countryId) {
-                val t1 = model.getCountryOne()
-                model.setCountryTwo(t1)
-                _loadCountryTwoLiveData.postValue(Event(model.getCountryList()[t1]))
-            }
-            model.setCountryOne(countryId)
-            _loadCountryOneLiveData.postValue(Event(model.getCountryList()[countryId]))
-        }
-    }
-
-    override fun setCauntryTwo(countryId: Int) {
-         viewModelScope.launch {
-            if (model.getCountryOne() != countryId) {
-                model.setCountryTwo(countryId)
-                _loadCountryTwoLiveData.postValue(Event(model.getCountryList()[model.getCountryTwo()]))
-            }
-        }
     }
 
     override fun done() {
-         viewModelScope.launch {
+        viewModelScope.launch {
             if (model.getIsFirstCountry())
                 _closeLiveData.postValue(Event(Unit))
             else {
@@ -88,24 +51,26 @@ class ViewModelChooseCountry @Inject constructor(
         }
     }
 
-    override fun clickOneCountry() {
-         viewModelScope.launch {
-            _openCountryDialogOneLiveData.postValue(Event(DataMoveCountry(model.getCountryOne())))
+    override fun clickOneCountry(countryId: Int) {
+        viewModelScope.launch {
+            if (model.getCountryTwo() == countryId) {
+                val t1 = model.getCountryOne()
+                model.setCountryTwo(t1)
+                _loadCountryTwoLiveData.postValue(Event(t1))
+            }
+            model.setCountryOne(countryId)
         }
     }
 
-    override fun clickTwoCountry() {
-         viewModelScope.launch {
-            _openCountryDialogTwoLiveData.postValue(
-                Event(
-                    DataMoveCountry(
-                        model.getCountryTwo(),
-                        model.getCountryOne()
-                    )
-                )
-            )
+    override fun clickTwoCountry(countryId: Int) {
+        viewModelScope.launch {
+            if (model.getCountryOne() != countryId) {
+                model.setCountryTwo(countryId)
+                _loadCountryTwoLiveData.postValue(Event(countryId))
+            }
+            else{
+                _loadCountryTwoLiveData.postValue(Event(model.getCountryTwo()))
+            }
         }
     }
-
-
 }

@@ -13,10 +13,8 @@ interface ContractChooseLanguages {
         suspend fun getIsFirstCountry():Boolean
     }
     interface ViewModel{
-        fun clickOneCountry()
-        fun setCauntryOne(countryId: Int)
-        fun clickTwoCountry()
-        fun setCauntryTwo(countryId: Int)
+        fun clickOneCountry(countryId: Int)
+        fun clickTwoCountry(countryId: Int)
         fun done()
     }
 }

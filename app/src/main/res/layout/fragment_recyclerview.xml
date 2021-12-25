@@ -48,5 +48,5 @@
         android:paddingBottom="?actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_action_bar_flag"
-        tools:listitem="@layout/item_country" />
+        tools:listitem="@layout/item_drop_down_country" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -2,42 +2,51 @@ package com.example.dictionary.ui.screens.dictionary
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary.R
-import com.example.dictionary.data.model.DataCountry
-import com.example.dictionary.data.model.DataMoveCountry
 import com.example.dictionary.data.model.Event
-import com.example.dictionary.databinding.FragmentSelectLanguageBinding
-import com.example.dictionary.ui.dialogs.DialogCountry
+import com.example.dictionary.databinding.FragmentSelectCountryBinding
+import com.example.dictionary.ui.adapter.AdapterDropDown
 import com.example.dictionary.ui.viewModel.dictionary.ViewModelChooseCountry
+import com.example.dictionary.utils.MyCountries
+import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
+import com.example.dictionary.utils.extention.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentChooseLanguages :
-    Fragment(R.layout.fragment_select_language) {
+    Fragment(R.layout.fragment_select_country) {
     /*
     * Null objects
     * */
-    private var binding: FragmentSelectLanguageBinding? = null
+    private var binding: FragmentSelectCountryBinding? = null
 
     /*
     * ViewModel is created
     * */
     private val viewModel: ViewModelChooseCountry by viewModels()
 
+    /**
+     * Adapter
+     * */
     /*
     * Observers is created
     * */
-    private val _setCountryOneObserver = Observer<Event<DataCountry>> {
-        setCountryOne(it.peekContent())
+    private val _setCountryOneObserver = Observer<Event<Int>> {
+        loadOnlyOneTimeObserver(it) {
+            binding?.spCountryOne?.setSelection(this)
+        }
     }
 
-    private val _setCountryTwoObserver = Observer<Event<DataCountry>> {
-        setCauntryTwo(it.peekContent())
+    private val _setCountryTwoObserver = Observer<Event<Int>> {
+        loadOnlyOneTimeObserver(it) {
+            binding?.spCountryTwo?.setSelection(this)
+        }
     }
 
     private val _openNextObserver = Observer<Event<Unit>> {
@@ -51,36 +60,11 @@ class FragmentChooseLanguages :
             findNavController().navigateUp()
     }
 
-    private val _openCountryDialogOneObserver = Observer<Event<DataMoveCountry>> { event ->
-        val data = event.getContentIfNotHandled()
-        if (data != null) {
-            val d = DialogCountry(requireActivity(), data.countryId)
-            d.submitListener {
-                viewModel.setCauntryOne(it)
-            }
-            d.show()
-        }
-    }
-
-    private val _openCountryDialogTwoObserver = Observer<Event<DataMoveCountry>> { event ->
-        val data = event.getContentIfNotHandled()
-        if (data != null) {
-            val notCountry = data.notCountry
-            if (notCountry != null) {
-                val d = DialogCountry(requireActivity(), data.countryId, notCountry)
-                d.submitListener {
-                    viewModel.setCauntryTwo(it)
-                }
-                d.show()
-            }
-        }
-    }
-
     /*
     * Override methods
     * */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentSelectLanguageBinding.bind(view)
+        binding = FragmentSelectCountryBinding.bind(view)
         registerObserver()
         loading()
     }
@@ -94,20 +78,34 @@ class FragmentChooseLanguages :
     * Private Methods
     * */
     private fun loading() {
-        binding?.countryOne?.setOnClickListener { viewModel.clickOneCountry() }
-        binding?.countryTwo?.setOnClickListener { viewModel.clickTwoCountry() }
+        binding?.spCountryOne?.apply {
+            val country = MyCountries()
+            adapter = AdapterDropDown(requireContext(), country.getCountries())
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    viewModel.clickOneCountry(position)
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    requireActivity().showToast("Nothing")
+                }
+
+            }
+        }
+        binding?.spCountryTwo?.apply {
+            val country = MyCountries()
+            adapter = AdapterDropDown(requireContext(), country.getCountries())
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    viewModel.clickTwoCountry(position)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    requireActivity().showToast("Nothing")
+                }
+
+            }
+        }
         binding?.done?.setOnClickListener { viewModel.done() }
-    }
-
-    private fun setCountryOne(data: DataCountry) {
-        binding?.countryOneFlag?.setBackgroundResource(data.flag)
-        binding?.countryOneText?.text = data.country
-    }
-
-    private fun setCauntryTwo(data: DataCountry) {
-        binding?.countryTwoFlag?.setBackgroundResource(data.flag)
-        binding?.countryTwoText?.text = data.country
-
     }
 
     private fun registerObserver() {
@@ -119,9 +117,5 @@ class FragmentChooseLanguages :
         viewModel.openNextLiveData.observe(owner, _openNextObserver)
 
         viewModel.closeLiveData.observe(owner, _closeObserver)
-
-        viewModel.openCountryDialogOneLiveData.observe(owner, _openCountryDialogOneObserver)
-
-        viewModel.openCountryDialogTwoLiveData.observe(owner, _openCountryDialogTwoObserver)
     }
 }

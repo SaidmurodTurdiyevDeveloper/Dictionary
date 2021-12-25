@@ -10,11 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.dictionary.R
 import com.example.dictionary.contracts.mixed.ContractDictionaryItem
 import com.example.dictionary.data.model.DataCountry
-import com.example.dictionary.data.model.DataMoveCountry
 import com.example.dictionary.data.model.Event
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.databinding.FragmentDictionaryItemBinding
-import com.example.dictionary.ui.dialogs.DialogCountry
 import com.example.dictionary.ui.viewModel.mixed.ViewModelDictionaryItem
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,10 +31,10 @@ class FragmentDictionaryItem : Fragment(R.layout.fragment_dictionary_item),
         closeWindow()
     }
     private var _loadCountryOneObserver = Observer<DataCountry> {
-        loadCountryOne(it)
+            binding?.countryOneFlag?.setBackgroundResource(it.flag)
     }
     private var _loadCountryTwoObserver = Observer<DataCountry> {
-        loadCountryTwo(it)
+        binding?.countryTwoFlag?.setBackgroundResource(it.flag)
     }
     private var _loadLearnPrecentObserver = Observer<String> {
         loadDataLearnPracent(it)
@@ -52,20 +50,6 @@ class FragmentDictionaryItem : Fragment(R.layout.fragment_dictionary_item),
         if (data != null)
             openList(id)
     }
-    private var _openCountryOneDialogObserever = Observer<Event<DataMoveCountry>> {
-        val data = it.getContentIfNotHandled()
-        if (data != null) {
-            openChangeLangugeDialogOne(data.countryId)
-        }
-    }
-    private var _openCountryTwoDialogObserver = Observer<Event<DataMoveCountry>> {
-        val data = it.getContentIfNotHandled()
-        if (data != null) {
-            val notdata = data.notCountry
-            if (notdata != null)
-                openChangeLangugeDialogTwo(notdata, data.countryId)
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         getUserId()
@@ -76,8 +60,6 @@ class FragmentDictionaryItem : Fragment(R.layout.fragment_dictionary_item),
 
     private fun setViewModelActions() {
         binding?.igbBack?.setOnClickListener { viewModel.close() }
-        binding?.countryOneFlag?.setOnClickListener { viewModel.openCountryDilog(true, id) }
-        binding?.countryTwoFlag?.setOnClickListener { viewModel.openCountryDilog(false, id) }
         binding?.textInfo?.setOnClickListener { viewModel.openInfo(id) }
         binding?.buttonlist?.setOnClickListener { viewModel.openList() }
     }
@@ -88,14 +70,6 @@ class FragmentDictionaryItem : Fragment(R.layout.fragment_dictionary_item),
         viewModel.loadCountryOneLivedata.observe(viewLifecycleOwner, _loadCountryOneObserver)
         viewModel.loadCountryTwoLivedata.observe(viewLifecycleOwner, _loadCountryTwoObserver)
         viewModel.loadLearnPrecentLivedata.observe(viewLifecycleOwner, _loadLearnPrecentObserver)
-        viewModel.openCountryOneDialogLiveData.observe(
-            viewLifecycleOwner,
-            _openCountryOneDialogObserever
-        )
-        viewModel.openCountryTwoDialogLiveData.observe(
-            viewLifecycleOwner,
-            _openCountryTwoDialogObserver
-        )
         viewModel.openInfoLiveData.observe(viewLifecycleOwner, _openInfoObserver)
         viewModel.openListLiveData.observe(viewLifecycleOwner, _openListObserver)
     }
@@ -117,33 +91,8 @@ class FragmentDictionaryItem : Fragment(R.layout.fragment_dictionary_item),
         }
     }
 
-
-    override fun loadCountryOne(dataCountry: DataCountry) {
-        binding?.countryOneFlag?.setBackgroundResource(dataCountry.flag)
-    }
-
-    override fun loadCountryTwo(dataCountry: DataCountry) {
-        binding?.countryTwoFlag?.setBackgroundResource(dataCountry.flag)
-    }
-
     override fun loadDataLearnPracent(text: String) {
         binding?.percentListWordText?.text = text
-    }
-
-    override fun openChangeLangugeDialogOne(countryId: Int) {
-        val d = DialogCountry(requireActivity(), countryId)
-        d.submitListener {
-            viewModel.setCountryOne(it, id)
-        }
-        d.show()
-    }
-
-    override fun openChangeLangugeDialogTwo(countryDismis: Int, countryId: Int) {
-        val d = DialogCountry(requireActivity(), countryId, countryDismis)
-        d.submitListener {
-            viewModel.setCountryTwo(it, id)
-        }
-        d.show()
     }
 
     override fun openInfoText(textInfo: String) {

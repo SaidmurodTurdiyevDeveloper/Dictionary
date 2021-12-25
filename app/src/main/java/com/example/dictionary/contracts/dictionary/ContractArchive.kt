@@ -2,13 +2,13 @@ package com.example.dictionary.contracts.dictionary
 
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 
-interface ContractArxive {
+interface ContractArchive {
     interface Model {
         suspend fun getAllRemovedItems(): List<DictionaryEntity>
         suspend fun delete(data: DictionaryEntity): Boolean
-        suspend fun deleteAll()
+        suspend fun deleteAll(list: List<DictionaryEntity>): Boolean
         suspend fun update(data: DictionaryEntity)
-        fun getItemCount(): Int
+        suspend fun getItemCount(): Int
     }
 
     interface ViewModel {
@@ -17,6 +17,6 @@ interface ContractArxive {
         fun update(data: DictionaryEntity)
         fun deleteAll()
         fun back()
-        fun openDialogDeleteAll()
+        fun getAllArchiveList()
     }
 }

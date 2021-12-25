@@ -15,6 +15,7 @@ import com.example.dictionary.ui.adapter.AdapterDictionary
 import com.example.dictionary.ui.dialogs.DialogText
 import com.example.dictionary.ui.dialogs.DialogTwoitemChoose
 import com.example.dictionary.ui.viewModel.dictionary.ViewModelArxive
+import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,32 +39,29 @@ class FragmentArxiv : Fragment(R.layout.fragment_arxive) {
     }
 
     private var itemTouchObserver = Observer<Event<DictionaryEntity>> {
-        val data = it.getContentIfNotHandled()
-        if (data != null) {
+        loadOnlyOneTimeObserver(it) {
             val dialog = DialogTwoitemChoose(requireContext(), "Item")
             dialog.submitRightChoose({
-                viewmodel.update(data)
+                viewmodel.update(this)
             })
             dialog.submitLeftChoose({
-                viewmodel.delete(data)
+                viewmodel.delete(this)
             })
-            dialog.show("this element (${data.name}) is returned to active or is deleted in database")
+            dialog.show("this element (${this.name}) is returned to active or is deleted in database")
         }
-
     }
 
     private var backObserver = Observer<Event<Unit>> {
         findNavController().navigateUp()
     }
 
-    private var deleteAllObserver = Observer<Event<Int>> {
-        val data = it.getContentIfNotHandled()
-        if (data != null) {
+    private var deleteAllObserver = Observer<Event<Unit>> {
+        loadOnlyOneTimeObserver(it) {
             val dialog = DialogText(requireContext(), "Clear Archive")
             dialog.submit {
                 viewmodel.deleteAll()
             }
-            dialog.show("All items ($data) in the archive will be deleted")
+            dialog.show("All items are deleting")
         }
     }
 
@@ -81,13 +79,14 @@ class FragmentArxiv : Fragment(R.layout.fragment_arxive) {
         adapter?.submitListenerItemTouch {
             viewmodel.itemTouch(it)
         }
-        binding?.list?.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        binding?.list?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding?.list?.adapter = adapter
         binding?.igbBack?.setOnClickListener {
             viewmodel.back()
         }
-        binding?.btnDelete?.setOnClickListener {
+
+        binding?.btnMenu?.setOnClickListener {
             viewmodel.deleteAll()
         }
     }
@@ -95,7 +94,7 @@ class FragmentArxiv : Fragment(R.layout.fragment_arxive) {
     private fun registerObserver() {
         viewmodel.backLiveData.observe(viewLifecycleOwner, backObserver)
         viewmodel.itemTouchLiveData.observe(viewLifecycleOwner, itemTouchObserver)
-        viewmodel.loadingLiveData.observe(viewLifecycleOwner, loadingObserver)
+        viewmodel.loadAllDataLiveData.observe(viewLifecycleOwner, loadingObserver)
         viewmodel.openDialogDeleteAllLiveData.observe(viewLifecycleOwner, deleteAllObserver)
     }
 }

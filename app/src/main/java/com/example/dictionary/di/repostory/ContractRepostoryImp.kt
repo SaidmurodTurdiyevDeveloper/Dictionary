@@ -1,6 +1,6 @@
 package com.example.dictionary.di.repostory
 
-import com.example.dictionary.contracts.dictionary.ContractArxive
+import com.example.dictionary.contracts.dictionary.ContractArchive
 import com.example.dictionary.contracts.dictionary.ContractChooseLanguages
 import com.example.dictionary.contracts.dictionary.ContractMain
 import com.example.dictionary.contracts.mixed.ContractDictionaryItem
@@ -26,5 +26,5 @@ interface ContractRepostoryImp {
     fun getChooseCountryRepostory(repostoryChooseCountry: RepostoryChooseCountry): ContractChooseLanguages.Model
 
     @Binds
-    fun getArxiveDictionary(repostory: RepostoryArxiv): ContractArxive.Model
+    fun getArxiveDictionary(repostory: RepostoryArxiv): ContractArchive.Model
 }

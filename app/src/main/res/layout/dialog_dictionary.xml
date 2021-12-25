@@ -85,6 +85,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:maxLines="3"
+            android:imeOptions="actionDone"
             android:paddingStart="16dp"
             tools:ignore="RtlSymmetry,TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>

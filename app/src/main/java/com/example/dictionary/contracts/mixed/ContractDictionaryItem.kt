@@ -14,11 +14,7 @@ interface ContractDictionaryItem {
 
     interface View {
         fun loadData(data: DictionaryEntity)
-        fun loadCountryOne(dataCountry: DataCountry)
-        fun loadCountryTwo(dataCountry: DataCountry)
         fun loadDataLearnPracent(text: String)
-        fun openChangeLangugeDialogOne(countryId: Int)
-        fun openChangeLangugeDialogTwo(countryDismis: Int, countryId: Int)
         fun openInfoText(textInfo: String)
         fun openList(id: Long)
         fun closeWindow()
@@ -27,9 +23,6 @@ interface ContractDictionaryItem {
     interface ViwModel {
         fun openInfo(id: Long)
         fun openList()
-        fun openCountryDilog(isCountryOne: Boolean, id: Long)
-        fun setCountryOne(countryId: Int, id: Long)
-        fun setCountryTwo(countryId: Int, id: Long)
         fun loadItem(id: Long)
         fun close()
     }

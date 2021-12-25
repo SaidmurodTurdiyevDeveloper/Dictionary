@@ -19,4 +19,7 @@ interface ArxiveDao {
 
     @Update
     suspend fun update(data: DictionaryEntity)
+
+    @Query("SELECT Count(id) From Dictionaries Where isDelete=1 ")
+    suspend fun getSize():Int
 }
