@@ -78,7 +78,7 @@ class DialogDictionary(context: Context, name: String = "Add") {
     private fun done() {
         binding?.let {bd->
             val text = bd.etName.text.toString()
-            if (text.isBlank()) {
+            if (text.isNotBlank()) {
                 data.name = text
                 listener?.invoke(data)
                 dialog.dismiss()

@@ -19,18 +19,20 @@ class DialogTwoitemChoose(
     private var _listenerLeftChoose: (() -> Unit)? = null
     private var dialog = AlertDialog.Builder(context).setView(view).create()
 
-    fun submitRightChoose(f: () -> Unit, textButton: String? = null) {
+    fun submitRightChoose(f: () -> Unit, textButton: String? = null): DialogTwoitemChoose {
         _listenerRightChoose = f
         if (textButton != null) {
             binding?.btnRight?.text = textButton
         }
+        return this
     }
 
-    fun submitLeftChoose(f: () -> Unit, textButton: String? = null) {
+    fun submitLeftChoose(f: () -> Unit, textButton: String? = null): DialogTwoitemChoose {
         _listenerLeftChoose = f
         if (textButton != null) {
             binding?.btnLeft?.text = textButton
         }
+        return this
     }
 
     init {
@@ -44,9 +46,11 @@ class DialogTwoitemChoose(
             }
             it.btnRight.setOnClickListener {
                 _listenerRightChoose?.invoke()
+                dialog.dismiss()
             }
             it.btnLeft.setOnClickListener {
                 _listenerLeftChoose?.invoke()
+                dialog.dismiss()
             }
         }
     }

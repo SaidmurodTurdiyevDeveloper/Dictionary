@@ -3,19 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
-    <Transition
-        motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
-        motion:duration="1000">
-       <KeyFrameSet>
-           <KeyAttribute
-               motion:motionTarget="@+id/def_cl_action_bar"
-               motion:framePosition="100"
-               android:alpha="0.5" />
-       </KeyFrameSet>
-        <OnSwipe motion:touchAnchorId="@+id/list" />
-    </Transition>
-
     <ConstraintSet android:id="@+id/start">
     </ConstraintSet>
 
@@ -27,4 +14,16 @@
             motion:layout_constraintTop_toTopOf="parent"
             android:visibility="invisible" />
     </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end"
+        motion:autoTransition="animateToStart" >
+        <OnSwipe motion:touchAnchorId="@+id/list" />
+        <KeyFrameSet >
+            <KeyAttribute
+                motion:motionTarget="@+id/def_cl_action_bar"
+                motion:framePosition="50"
+                android:alpha="0.5" />
+        </KeyFrameSet>
+    </Transition>
 </MotionScene>

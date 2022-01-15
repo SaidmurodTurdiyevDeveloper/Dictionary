@@ -1,9 +1,11 @@
 package com.example.dictionary.di.repostory
 
+import com.example.dictionary.contracts.ContractSplash
 import com.example.dictionary.contracts.dictionary.ContractArchive
 import com.example.dictionary.contracts.dictionary.ContractChooseLanguages
 import com.example.dictionary.contracts.dictionary.ContractMain
 import com.example.dictionary.contracts.mixed.ContractDictionaryItem
+import com.example.dictionary.data.repostory.RepostorySplash
 import com.example.dictionary.data.repostory.dictionary.RepostoryArxiv
 import com.example.dictionary.data.repostory.dictionary.RepostoryChooseCountry
 import com.example.dictionary.data.repostory.dictionary.RepostoryMain
@@ -11,10 +13,10 @@ import com.example.dictionary.data.repostory.mixed.RepostoryDictionaryItem
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 interface ContractRepostoryImp {
     @Binds
     fun getMainRepastory(repostory: RepostoryMain): ContractMain.Model
@@ -27,4 +29,7 @@ interface ContractRepostoryImp {
 
     @Binds
     fun getArxiveDictionary(repostory: RepostoryArxiv): ContractArchive.Model
+
+    @Binds
+    fun getSplashRepostory(repostory: RepostorySplash): ContractSplash.Model
 }

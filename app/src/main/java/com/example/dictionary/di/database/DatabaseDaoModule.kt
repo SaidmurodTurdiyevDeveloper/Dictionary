@@ -1,10 +1,11 @@
 package com.example.dictionary.di.database
 
 import com.example.dictionary.data.source.local.room.MyDataBase
-import com.example.dictionary.data.source.local.room.dao.WordDao
-import com.example.dictionary.data.source.local.room.dao.dictionaries.ArxiveDao
-import com.example.dictionary.data.source.local.room.dao.dictionaries.DictionaryItemDao
-import com.example.dictionary.data.source.local.room.dao.dictionaries.MainDao
+import com.example.dictionary.data.source.local.room.dao.SplashDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.WordRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.dictionaries.ArxiveRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.dictionaries.DictionaryItemRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.dictionaries.MainRoomDatabaseDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,18 +17,20 @@ import javax.inject.Singleton
 class DatabaseDaoModule {
 
     @Provides
-    @Singleton
-    fun getDatabaseDaoWord(dataBase: MyDataBase): WordDao = dataBase.getWordsDataBase()
-
-    @Provides
-    fun getDatabaseDaoDictionaryMain(dataBase: MyDataBase): MainDao =
+    fun getDatabaseDaoDictionaryMain(dataBase: MyDataBase): MainRoomDatabaseDao =
         dataBase.getDictionaryDataBaseForMain()
 
     @Provides
-    fun getDatabaseDaoDictionaryArxive(dataBase: MyDataBase): ArxiveDao =
+    fun getDatabaseDaoDictionaryArxive(dataBase: MyDataBase): ArxiveRoomDatabaseDao =
         dataBase.getDictionaryDataBaseForArxive()
 
     @Provides
-    fun getDatabaseDaoDictionaryForItems(dataBase: MyDataBase): DictionaryItemDao =
-        dataBase.getDictionoryItemDatabase()
+    fun getDatabaseDaoDictionaryForItems(dataBase: MyDataBase): WordRoomDatabaseDao =
+        dataBase.getWordsDataBase()
+
+    @Provides
+    fun getSplashRoomDatabaseDao(dataBase: MyDataBase): SplashDatabaseDao = dataBase.getSplashDao()
+
+    @Provides
+    fun getDictionaryItemDao(dataBase: MyDataBase): DictionaryItemRoomDatabaseDao = dataBase.getDictionaryItemDao()
 }

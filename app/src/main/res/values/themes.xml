@@ -49,8 +49,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="BackgroundLayout">
-        <item name="android:background">#809D9D9D</item>
+    <style name="ImageIconStyle">
+        <item name="backgroundTint">@color/ic_bg_light</item>
     </style>
 
+    <style name="SplashScreenLogo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_logo_bg</item>
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
 </resources>

@@ -106,7 +106,7 @@
         android:id="@+id/fragmentChooseLanguages"
         android:name="com.example.dictionary.ui.screens.dictionary.FragmentChooseLanguages"
         android:label="FragmentChooseLanguages"
-        tools:layout="@layout/fragment_select_language">
+        tools:layout="@layout/fragment_select_country">
         <action
             android:id="@+id/action_openfragment_main_in_chooselangiages"
             app:destination="@id/fragmentMain"

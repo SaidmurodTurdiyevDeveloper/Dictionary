@@ -1,6 +1,6 @@
 package com.example.dictionary.data.model
 
-open class Event<out T>(private val content: T, private val block: (() -> Unit)? = null) {
+open class Event<T>(private val content: T, val block: ((T) -> Unit)? = null) {
 
     var hasBeenHandled = false
         private set

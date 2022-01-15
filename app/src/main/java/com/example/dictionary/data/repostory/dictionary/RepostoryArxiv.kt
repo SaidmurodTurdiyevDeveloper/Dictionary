@@ -1,14 +1,14 @@
 package com.example.dictionary.data.repostory.dictionary
 
 import com.example.dictionary.contracts.dictionary.ContractArchive
-import com.example.dictionary.data.source.local.room.dao.dictionaries.ArxiveDao
+import com.example.dictionary.data.source.local.room.dao.dictionaries.ArxiveRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import javax.inject.Inject
 
 class RepostoryArxiv @Inject constructor(
-    private var database: ArxiveDao,
+    private var database: ArxiveRoomDatabaseDao,
 ) : ContractArchive.Model {
-    override suspend fun getAllRemovedItems(): List<DictionaryEntity> = database.getAllDeletedItem()
+    override suspend fun getArchiveList(): List<DictionaryEntity> = database.getArxiveList()
 
     override suspend fun delete(data: DictionaryEntity): Boolean {
         return 0 < database.delete(data)
@@ -18,7 +18,7 @@ class RepostoryArxiv @Inject constructor(
         return 0 < database.deleteAll(list)
     }
 
-    override suspend fun update(data: DictionaryEntity) {
+    override suspend fun returnToActive(data: DictionaryEntity) {
         database.update(data)
     }
 

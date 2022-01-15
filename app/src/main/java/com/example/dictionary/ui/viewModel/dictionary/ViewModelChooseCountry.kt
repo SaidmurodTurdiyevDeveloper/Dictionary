@@ -35,41 +35,41 @@ class ViewModelChooseCountry @Inject constructor(
 
     init {
             viewModelScope.launch {
-                _loadCountryOneLiveData.postValue(Event(model.getCountryOne()))
-                _loadCountryTwoLiveData.postValue(Event(model.getCountryTwo()))
+                _loadCountryOneLiveData.postValue(Event(model.getFirstCountryId()))
+                _loadCountryTwoLiveData.postValue(Event(model.getSecondCountryId()))
             }
     }
 
     override fun done() {
         viewModelScope.launch {
-            if (model.getIsFirstCountry())
+            if (model.getThisFirstTimeEnter())
                 _closeLiveData.postValue(Event(Unit))
             else {
-                model.setFirstEnter()
+                model.setFirstTimeEnter()
                 _openNextLiveData.postValue(Event(Unit))
             }
         }
     }
 
-    override fun clickOneCountry(countryId: Int) {
+    override fun clickFirstCountry(countryId: Int) {
         viewModelScope.launch {
-            if (model.getCountryTwo() == countryId) {
-                val t1 = model.getCountryOne()
-                model.setCountryTwo(t1)
+            if (model.getSecondCountryId() == countryId) {
+                val t1 = model.getFirstCountryId()
+                model.setSecondCountryId(t1)
                 _loadCountryTwoLiveData.postValue(Event(t1))
             }
-            model.setCountryOne(countryId)
+            model.setFirstCountryId(countryId)
         }
     }
 
-    override fun clickTwoCountry(countryId: Int) {
+    override fun clickSecondCountry(countryId: Int) {
         viewModelScope.launch {
-            if (model.getCountryOne() != countryId) {
-                model.setCountryTwo(countryId)
+            if (model.getFirstCountryId() != countryId) {
+                model.setSecondCountryId(countryId)
                 _loadCountryTwoLiveData.postValue(Event(countryId))
             }
             else{
-                _loadCountryTwoLiveData.postValue(Event(model.getCountryTwo()))
+                _loadCountryTwoLiveData.postValue(Event(model.getSecondCountryId()))
             }
         }
     }

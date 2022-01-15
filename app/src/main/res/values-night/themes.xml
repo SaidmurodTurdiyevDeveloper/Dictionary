@@ -49,7 +49,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="BackgroundLayout">
-        <item name="android:background">#80181818</item>
+    <style name="ImageIconStyle">
+        <item name="backgroundTint">@color/ic_bg_night</item>
     </style>
 </resources>

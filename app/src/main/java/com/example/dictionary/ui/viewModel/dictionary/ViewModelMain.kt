@@ -37,8 +37,8 @@ class ViewModelMain @Inject constructor(
     private val _openArxiveLiveData = MutableLiveData<Event<Unit>>()
     val openArxiveLiveData: LiveData<Event<Unit>> get() = _openArxiveLiveData
 
-    private val _addLiveData = MutableLiveData<Event<Unit>>()
-    val addLiveData: LiveData<Event<Unit>> get() = _addLiveData
+    private val _addLiveData = MutableLiveData<Event<DictionaryEntity>>()
+    val addLiveData: LiveData<Event<DictionaryEntity>> get() = _addLiveData
 
     private val _openSettingLiveData = MutableLiveData<Event<Unit>>()
     val openSettingLiveData: LiveData<Event<Unit>> get() = _openSettingLiveData
@@ -69,8 +69,8 @@ class ViewModelMain @Inject constructor(
 
     fun loadData() {
         viewModelScope.launch {
-            _loadLiveData.postValue(Event(model.getList()))
-            _learnCountLiveData.postValue(Event(model.getLearnCount()))
+            _loadLiveData.postValue(Event(model.getActiveListOfDictionary()))
+            _learnCountLiveData.postValue(Event(model.getCountOfWordsWhichLearned()))
         }
     }
 
@@ -80,8 +80,8 @@ class ViewModelMain @Inject constructor(
 
     override fun delete(data: DictionaryEntity) {
         viewModelScope.launch {
-            model.delete(data)
-            _loadLiveData.postValue(Event(model.getList()))
+            model.encaseToArchive(data)
+            _loadLiveData.postValue(Event(model.getActiveListOfDictionary()))
         }
     }
 
@@ -91,61 +91,46 @@ class ViewModelMain @Inject constructor(
 
 
     override fun darkLightClick() {
-        val cond: Boolean = !model.getDayNight()
-        model.setDayNight(cond)
+        val cond: Boolean = !model.getIsDayOrNight()
+        model.setDayOrNight(cond)
         _darkLightClickLiveData.postValue(Event(cond))
     }
 
     override fun add() {
-        _addLiveData.value = Event(Unit)
+        _addLiveData.value = Event(DictionaryEntity(-1,"Empty","None",0,0,0,0),{
+            viewModelScope.launch {
+                model.addNewDictionary(it)
+                _loadLiveData.postValue(Event(model.getActiveListOfDictionary()))
+            }
+        })
     }
 
-    override fun addItem(data: DictionaryEntity) {
-        viewModelScope.launch {
-            model.add(data)
-            _loadLiveData.postValue(Event(model.getList()))
+
+    override fun update(oldData: DictionaryEntity) {
+        _editLiveData.value = Event(oldData) {
+            viewModelScope.launch {
+                model.updateDictionary(it)
+                _loadLiveData.postValue(Event(model.getActiveListOfDictionary()))
+            }
         }
     }
 
-    override fun edit(oldData: DictionaryEntity) {
-        _editLiveData.value = Event(oldData)
-    }
+    override fun openHome() { _openHomeLiveData.value = Event(Unit) }
 
-    override fun update(newData: DictionaryEntity) {
-        viewModelScope.launch {
-            model.edit(newData)
-            _loadLiveData.postValue(Event(model.getList()))
-        }
-    }
+    override fun openArxive() { _openArxiveLiveData.value = Event(Unit) }
 
-    override fun openHome() {
-        _openHomeLiveData.value = Event(Unit)
-    }
+    override fun openSetting() { _openSettingLiveData.value = Event(Unit) }
 
-    override fun openArxive() {
-        _openArxiveLiveData.value = Event(Unit)
-    }
+    override fun openGame() { _openGameLiveData.value = Event(Unit) }
 
-    override fun openSetting() {
-        _openSettingLiveData.value = Event(Unit)
-    }
+    override fun openChangeLanguage() { _openChangeLanguageLiveData.value = Event(Unit) }
 
-    override fun openGame() {
-        _openGameLiveData.value = Event(Unit)
-    }
-
-    override fun openChangeLanguage() {
-        _openChangeLanguageLiveData.value = Event(Unit)
-    }
-
-    override fun openInfo() {
-        _openInfoLiveData.value = Event(Unit)
-    }
+    override fun openInfo() { _openInfoLiveData.value = Event(Unit) }
 
     override fun deleteAll() {
         viewModelScope.launch {
-            model.deleteAll()
-            _loadLiveData.postValue(Event(model.getList()))
+            model.encaseListtoArchive()
+            _loadLiveData.postValue(Event(model.getActiveListOfDictionary()))
         }
     }
 
@@ -160,14 +145,16 @@ class ViewModelMain @Inject constructor(
     }
 
     override fun openItem(id: Long) {
-        _openItemLiveData.postValue(Event(id))
+        _openItemLiveData.postValue(Event(id) {
+
+        })
     }
 
     override fun cancelSelected() {
         viewModelScope.launch {
             model.cancelSelected()
             _closeActionBarLiveData.postValue(Event(Unit))
-            _loadLiveData.postValue(Event(model.getList()))
+            _loadLiveData.postValue(Event(model.getActiveListOfDictionary()))
         }
     }
 

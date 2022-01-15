@@ -83,7 +83,7 @@ class FragmentChooseLanguages :
             adapter = AdapterDropDown(requireContext(), country.getCountries())
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    viewModel.clickOneCountry(position)
+                    viewModel.clickFirstCountry(position)
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     requireActivity().showToast("Nothing")
@@ -96,7 +96,7 @@ class FragmentChooseLanguages :
             adapter = AdapterDropDown(requireContext(), country.getCountries())
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    viewModel.clickTwoCountry(position)
+                    viewModel.clickSecondCountry(position)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

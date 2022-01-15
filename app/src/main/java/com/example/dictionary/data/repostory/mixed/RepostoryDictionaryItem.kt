@@ -2,14 +2,14 @@ package com.example.dictionary.data.repostory.mixed
 
 import com.example.dictionary.contracts.mixed.ContractDictionaryItem
 import com.example.dictionary.data.model.DataCountry
-import com.example.dictionary.data.source.local.room.dao.dictionaries.DictionaryItemDao
+import com.example.dictionary.data.source.local.room.dao.dictionaries.DictionaryItemRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.utils.MyCountries
 import javax.inject.Inject
 
 class RepostoryDictionaryItem @Inject constructor(
     private var countries: MyCountries,
-    private var databse: DictionaryItemDao
+    private var databse: DictionaryItemRoomDatabaseDao
 ) :
     ContractDictionaryItem.Model {
 

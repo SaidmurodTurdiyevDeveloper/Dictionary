@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A72BA"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center|top"
     android:orientation="vertical">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="match_parent"
+    <com.agrawalsuneet.dotsloader.loaders.AllianceLoader
+        android:id="@+id/loader"
         android:layout_height="wrap_content"
-        android:src="@drawable/gif_my_splash_gif"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:alliance_animDuration="500"
+        app:alliance_distanceMultiplier="3"
+        app:alliance_dotsRadius="10dp"
+        app:alliance_drawOnlyStroke="true"
+        app:alliance_firstDotsColor="@color/red"
+        app:alliance_secondDotsColor="@color/amber"
+        app:alliance_strokeWidth="4dp"
+        app:alliance_thirdDotsColor="@color/green" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

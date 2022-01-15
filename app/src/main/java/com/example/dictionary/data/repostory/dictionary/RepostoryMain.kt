@@ -1,40 +1,39 @@
 package com.example.dictionary.data.repostory.dictionary
 
 import com.example.dictionary.contracts.dictionary.ContractMain
-import com.example.dictionary.data.source.local.room.dao.dictionaries.MainDao
+import com.example.dictionary.data.source.local.room.dao.dictionaries.MainRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.data.source.local.shared.SharedDatabese
 import com.example.dictionary.utils.MyStringObjects
 import javax.inject.Inject
 
 class RepostoryMain @Inject constructor(
-    private var database: MainDao,
+    private var database: MainRoomDatabaseDao,
     private var localStore: SharedDatabese
 ) : ContractMain.Model {
     private var array = ArrayList<DictionaryEntity>()
     private var checkedCaount = 0
 
-    override suspend fun getLearnCount(): Long {
+    override suspend fun getCountOfWordsWhichLearned(): Long {
         return database.getLearnedCount()
     }
 
-    override suspend fun add(data: DictionaryEntity) {
+    override suspend fun addNewDictionary(data: DictionaryEntity) {
         data.languageIdOne = getLanguageOne()
         data.languageIdTwo = getLanguageTwo()
-        val id = database.insert(data)
-        data.id = id
+       database.insert(data)
     }
 
-    override suspend fun edit(data: DictionaryEntity) {
+    override suspend fun updateDictionary(data: DictionaryEntity) {
         database.update(data)
     }
 
-    override suspend fun delete(data: DictionaryEntity) {
+    override suspend fun encaseToArchive(data: DictionaryEntity) {
         data.isDelete = 1
         database.update(data)
     }
 
-    override suspend fun getList(): List<DictionaryEntity> {
+    override suspend fun getActiveListOfDictionary(): List<DictionaryEntity> {
         val ls = database.getDictionaries(
             getLanguageOne(),
             getLanguageTwo()
@@ -50,24 +49,24 @@ class RepostoryMain @Inject constructor(
         return localStore.getIntData(MyStringObjects.LANGUAGE_TWO)
     }
 
-    override fun getDayNight(): Boolean {
+    override fun getIsDayOrNight(): Boolean {
         return localStore.getBoolenData(MyStringObjects.DAY_NIGHT)
     }
 
-    override fun setDayNight(cond: Boolean) {
+    override fun setDayOrNight(cond: Boolean) {
         localStore.setBoolenData(MyStringObjects.DAY_NIGHT, cond)
     }
 
-    override suspend fun deleteAll() {
+    override suspend fun encaseListtoArchive() {
         array.forEach {
             if (it.isSelect) {
-                this.delete(it)
+                this.encaseToArchive(it)
             }
         }
     }
 
     override suspend fun selectAll(): List<DictionaryEntity> {
-        val list = getList()
+        val list = getActiveListOfDictionary()
         list.forEach {
             it.isSelect = true
         }
@@ -103,7 +102,7 @@ class RepostoryMain @Inject constructor(
     }
 
     override suspend fun addArrays(): List<DictionaryEntity> {
-        array.addAll(getList())
+        array.addAll(getActiveListOfDictionary())
         return array.toMutableList()
     }
 

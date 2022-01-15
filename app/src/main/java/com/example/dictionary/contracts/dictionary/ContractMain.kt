@@ -4,15 +4,15 @@ import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 
 interface ContractMain {
     interface Model {
-       suspend fun getLearnCount(): Long
-       suspend fun add(data: DictionaryEntity)
-       suspend fun edit(data: DictionaryEntity)
-       suspend fun delete(data: DictionaryEntity)
-       suspend fun deleteAll()
+       suspend fun getCountOfWordsWhichLearned(): Long
+       suspend fun addNewDictionary(data: DictionaryEntity)
+       suspend fun updateDictionary(data: DictionaryEntity)
+       suspend fun encaseToArchive(data: DictionaryEntity)
+       suspend fun encaseListtoArchive()
 
-       suspend fun getList(): List<DictionaryEntity>
-       fun getDayNight(): Boolean
-       fun setDayNight(cond: Boolean)
+       suspend fun getActiveListOfDictionary(): List<DictionaryEntity>
+       fun getIsDayOrNight(): Boolean
+       fun setDayOrNight(cond: Boolean)
        suspend fun selectAll():List<DictionaryEntity>
        suspend fun cancelSelected()
        suspend fun check(position: Int):Boolean
@@ -27,8 +27,7 @@ interface ContractMain {
         fun remove(data: DictionaryEntity)
         fun delete(data: DictionaryEntity)
 
-        fun edit(oldData: DictionaryEntity)
-        fun update(newData: DictionaryEntity)
+        fun update(oldData: DictionaryEntity)
 
         fun select(position: Int)
         fun onceCheck(position: Int)
@@ -40,7 +39,6 @@ interface ContractMain {
         fun darkLightClick()
 
         fun add()
-        fun addItem(data: DictionaryEntity)
 
         fun openHome()
         fun openArxive()

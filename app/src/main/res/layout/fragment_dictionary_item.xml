@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/BackgroundLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -20,7 +19,7 @@
             android:id="@+id/igb_back"
             style="@style/ButtonStyleBorderless"
             android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:clickable="true"
             android:contentDescription="@string/text_todo"
@@ -67,6 +66,18 @@
             android:contentDescription="@string/text_todo"
             tools:background="@drawable/country_uzb"
             tools:ignore="ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/def_change_country"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/text_todo"
+            app:layout_constraintDimensionRatio="1:1"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/ic_compare"
+            app:layout_constraintLeft_toRightOf="@id/country_one_flag"
+            app:layout_constraintRight_toLeftOf="@id/country_two_flag"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/country_two_flag"
@@ -150,7 +161,7 @@
             android:layout_marginTop="75dp"
             android:layout_marginRight="32dp"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/day_night_my_button"
+            android:background="@drawable/day_night_bg_btn"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
