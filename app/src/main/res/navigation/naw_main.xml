@@ -132,6 +132,12 @@
         <action
             android:id="@+id/action_fragmentWordsLearn_to_fragmentWordsList"
             app:destination="@id/fragmentWordsList" />
+        <argument
+            android:name="Id"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_fragmentWordsLearn_to_wordItem"
+            app:destination="@id/wordItem" />
     </fragment>
     <fragment
         android:id="@+id/fragmentWordsList"
@@ -145,12 +151,19 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="Id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/wordItem"
         android:name="com.example.dictionary.ui.screens.words.FragmentWordItem"
         android:label="WordItem"
-        tools:layout="@layout/fragment_word_item" />
+        tools:layout="@layout/fragment_word_item" >
+        <argument
+            android:name="Id"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentAppInfo"
         android:name="com.example.dictionary.ui.screens.dictionary.FragmentAppInfo"
@@ -158,17 +171,25 @@
         tools:layout="@layout/fragment_app_info" />
     <fragment
         android:id="@+id/fragmentDictionaryInfo"
-        android:name="com.example.dictionary.ui.screens.mixed.FragmentDictionaryInfo"
+        android:name="com.example.dictionary.ui.screens.dictionary.FragmentDictionaryInfo"
         android:label="FragmentDictionaryInfo"
-        tools:layout="@layout/fragment_dictionary_info" />
+        tools:layout="@layout/fragment_dictionary_info" >
+        <argument
+            android:name="Id"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentWordsPlay"
         android:name="com.example.dictionary.ui.screens.words.FragmentWordsPlay"
         android:label="FragmentWordsPlay"
-        tools:layout="@layout/fragment_words_play" />
+        tools:layout="@layout/fragment_words_play" >
+        <argument
+            android:name="Id"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentDictionaryItem"
-        android:name="com.example.dictionary.ui.screens.mixed.FragmentDictionaryItem"
+        android:name="com.example.dictionary.ui.screens.dictionary.FragmentDictionaryItem"
         android:label="FragmentDictionaryItem"
         tools:layout="@layout/fragment_dictionary_item">
         <action

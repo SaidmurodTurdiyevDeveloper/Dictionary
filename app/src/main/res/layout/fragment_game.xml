@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:layout_marginRight="52dp"
             android:gravity="center"
-            tools:text="Title" />
+            tools:text="Game" />
 
     </LinearLayout>
 

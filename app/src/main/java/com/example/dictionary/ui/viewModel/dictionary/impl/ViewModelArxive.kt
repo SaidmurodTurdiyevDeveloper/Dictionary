@@ -1,4 +1,4 @@
-package com.example.dictionary.ui.viewModel.dictionary
+package com.example.dictionary.ui.viewModel.dictionary.impl
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.dictionary.contracts.dictionary.ContractArchive
 import com.example.dictionary.data.model.Event
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
-import com.example.dictionary.domen.UseCaseArchive
-import com.example.dictionary.utils.Responce
+import com.example.dictionary.domen.dictionary.UseCaseArchive
+import com.example.dictionary.utils.other.Responce
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
@@ -32,7 +32,6 @@ class ViewModelArxive @Inject constructor(private var useCase: UseCaseArchive) :
     private val _openDialogDeleteAllLiveData = MediatorLiveData<Event<Unit>>()
     val openDialogDeleteAllLiveData: LiveData<Event<Unit>> get() = _openDialogDeleteAllLiveData
 
-
     private val _showMessageToastLiveData = MediatorLiveData<Event<String>>()
     val showMessageToastLiveData: LiveData<Event<String>> get() = _showMessageToastLiveData
 
@@ -50,11 +49,7 @@ class ViewModelArxive @Inject constructor(private var useCase: UseCaseArchive) :
                 when (it) {
                     is Responce.Success -> {
                         _loadingLiveData.postValue(Event(false))
-                        if (it.data) {
-                            getArchiveList()
-                        } else {
-                            _showMessageToastLiveData.postValue(Event("Data is not delete"))
-                        }
+                        _loadAllDataLiveData.postValue(Event(it.data))
                     }
                     is Responce.Error -> {
                         _loadingLiveData.postValue(Event(false))
@@ -81,7 +76,7 @@ class ViewModelArxive @Inject constructor(private var useCase: UseCaseArchive) :
                 when (it) {
                     is Responce.Success -> {
                         _loadingLiveData.postValue(Event(false))
-                        getArchiveList()
+                        _loadAllDataLiveData.postValue(Event(it.data))
                     }
                     is Responce.Error -> {
                         _loadingLiveData.postValue(Event(false))
@@ -109,11 +104,7 @@ class ViewModelArxive @Inject constructor(private var useCase: UseCaseArchive) :
                     when (it) {
                         is Responce.Success -> {
                             _loadingLiveData.postValue(Event(false))
-                            if (it.data) {
-                                getArchiveList()
-                            } else {
-                                _showMessageToastLiveData.postValue(Event("Data is not delete"))
-                            }
+                            _loadAllDataLiveData.postValue(Event(it.data))
                         }
                         is Responce.Error -> {
                             _loadingLiveData.postValue(Event(false))

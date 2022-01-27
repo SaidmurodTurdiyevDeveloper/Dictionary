@@ -4,47 +4,36 @@ import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 
 interface ContractMain {
     interface Model {
-       suspend fun getCountOfWordsWhichLearned(): Long
-       suspend fun addNewDictionary(data: DictionaryEntity)
-       suspend fun updateDictionary(data: DictionaryEntity)
-       suspend fun encaseToArchive(data: DictionaryEntity)
-       suspend fun encaseListtoArchive()
-
-       suspend fun getActiveListOfDictionary(): List<DictionaryEntity>
-       fun getIsDayOrNight(): Boolean
-       fun setDayOrNight(cond: Boolean)
-       suspend fun selectAll():List<DictionaryEntity>
-       suspend fun cancelSelected()
-       suspend fun check(position: Int):Boolean
-       suspend fun addArrays():List<DictionaryEntity>
-       suspend fun getSelectedArray():List<DictionaryEntity>
+        suspend fun getCountOfWordsWhichLearned(): Long
+        suspend fun addNewDictionary(data: DictionaryEntity): Long
+        suspend fun updateDictionary(data: DictionaryEntity)
+        suspend fun encaseToArchive(data: DictionaryEntity)
+        suspend fun getActiveListOfDictionary(firstId: Int, secondId: Int): List<DictionaryEntity>
+        fun getIsDayOrNight(): Boolean
+        fun setDayOrNight(cond: Boolean)
+        fun getLanguageOne():Int
+        fun getLanguageTwo():Int
     }
 
     interface ViewModel {
-        fun clickItem(id: Long)
-        fun openItem(id:Long)
-
-        fun remove(data: DictionaryEntity)
+        fun clickItem(data: DictionaryEntity)
+        fun loadData()
+        fun loadCountLearnedWord()
         fun delete(data: DictionaryEntity)
-
         fun update(oldData: DictionaryEntity)
-
-        fun select(position: Int)
-        fun onceCheck(position: Int)
         fun deleteAll()
-        fun checkAll(cond: Boolean)
+        fun checkAll()
         fun cancelSelected()
-
-
-        fun darkLightClick()
-
+        fun dayNightClick()
         fun add()
 
+        fun openDictionaryItem(id:Long)
         fun openHome()
         fun openArxive()
         fun openSetting()
         fun openGame()
         fun openChangeLanguage()
-        fun openInfo()
+        fun openAppInfo()
+        fun openAnotherActionBar()
     }
 }

@@ -28,7 +28,7 @@
             tools:targetApi="lollipop" />
 
         <ImageButton
-            android:id="@+id/darckNightButtonHome"
+            android:id="@+id/day_night_button_home"
             style="@style/ButtonStyleBorderless"
             android:layout_width="32dp"
             android:layout_height="32dp"

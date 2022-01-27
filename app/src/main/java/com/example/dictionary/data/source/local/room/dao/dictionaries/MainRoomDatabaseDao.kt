@@ -11,5 +11,4 @@ interface MainRoomDatabaseDao : BaseDao<DictionaryEntity> {
 
     @Query("SELECT count(id) FROM WORDDATABASE WHERE learnedCount>3")
     suspend fun getLearnedCount(): Long
-
 }

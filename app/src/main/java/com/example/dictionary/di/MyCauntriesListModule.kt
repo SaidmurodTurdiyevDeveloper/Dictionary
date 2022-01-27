@@ -1,6 +1,6 @@
 package com.example.dictionary.di
 
-import com.example.dictionary.utils.MyCountries
+import com.example.dictionary.utils.other.MyCountries
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,8 +9,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class MyCauntriesListModule {
+object MyCauntriesListModule {
     @Provides
     @Singleton
-    fun getMyCountries():MyCountries=MyCountries()
+    fun provideMyCountries(): MyCountries = MyCountries()
 }

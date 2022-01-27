@@ -1,4 +1,4 @@
-package com.example.dictionary.utils
+package com.example.dictionary.utils.other
 
 object MyStringObjects {
     const val FIRST_ENTER_MODE:String="FIRST_ENTER_MODE_MY_DICTIONARY_SMT"

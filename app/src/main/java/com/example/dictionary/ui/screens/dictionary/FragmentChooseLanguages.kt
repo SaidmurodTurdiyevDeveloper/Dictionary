@@ -12,8 +12,8 @@ import com.example.dictionary.R
 import com.example.dictionary.data.model.Event
 import com.example.dictionary.databinding.FragmentSelectCountryBinding
 import com.example.dictionary.ui.adapter.AdapterDropDown
-import com.example.dictionary.ui.viewModel.dictionary.ViewModelChooseCountry
-import com.example.dictionary.utils.MyCountries
+import com.example.dictionary.ui.viewModel.dictionary.impl.ViewModelChooseCountry
+import com.example.dictionary.utils.other.MyCountries
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import dagger.hilt.android.AndroidEntryPoint

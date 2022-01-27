@@ -1,4 +1,4 @@
-package com.example.dictionary.ui.screens.mixed
+package com.example.dictionary.ui.screens.dictionary
 
 import androidx.fragment.app.Fragment
 import com.example.dictionary.R

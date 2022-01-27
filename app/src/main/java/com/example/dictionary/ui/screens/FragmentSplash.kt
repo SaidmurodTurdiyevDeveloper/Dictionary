@@ -9,11 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary.R
 import com.example.dictionary.data.source.local.shared.SharedDatabese
-import com.example.dictionary.utils.MyStringObjects
+import com.example.dictionary.utils.other.MyStringObjects
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @AndroidEntryPoint

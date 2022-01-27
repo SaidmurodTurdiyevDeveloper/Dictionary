@@ -6,24 +6,22 @@ import android.content.Context
 import android.view.LayoutInflater
 import com.example.dictionary.R
 import com.example.dictionary.databinding.DialogTextBinding
+import com.example.dictionary.utils.other.emptyBlock
 
 class DialogText(context: Context, name: String) {
     @SuppressLint("InflateParams")
-    private var view =
-        LayoutInflater.from(context).inflate(R.layout.dialog_text, null, false)
-    private var listener: (() -> Unit)? = null
-    private val dialog: AlertDialog =
-        AlertDialog.Builder(context).setView(view).create()
+    private var view = LayoutInflater.from(context).inflate(R.layout.dialog_text, null, false)
+    private var listener: emptyBlock? = null
+    private val dialog: AlertDialog = AlertDialog.Builder(context).setView(view).create()
     private var binding: DialogTextBinding? = DialogTextBinding.bind(view)
 
-    fun submit(f: (() -> Unit)) {
-        listener = f
+    fun submit(block: emptyBlock): DialogText {
+        listener = block
+        return this
     }
 
     init {
-        dialog.setOnDismissListener {
-            binding = null
-        }
+        dialog.setOnDismissListener { binding = null }
         binding?.let {
             it.btnOk.setOnClickListener {
                 listener?.invoke()

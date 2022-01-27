@@ -90,6 +90,7 @@
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
+                android:id="@+id/spRefresh"
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -113,13 +114,23 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:rippleColor="@color/white" />
 
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/Text.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amarante"
+                android:textSize="24sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/layoutLoadingMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#33000000"
+            android:background="#99000000"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
@@ -131,6 +142,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -141,4 +153,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout_menu"
         app:menu="@menu/main_menu" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

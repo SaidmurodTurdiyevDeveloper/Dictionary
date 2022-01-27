@@ -1,4 +1,4 @@
-package com.example.dictionary.contracts.mixed
+package com.example.dictionary.contracts.dictionary
 
 import com.example.dictionary.data.model.DataCountry
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
@@ -6,10 +6,10 @@ import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 interface ContractDictionaryItem {
     interface Model {
         suspend fun getData(id: Long): DictionaryEntity
-        suspend fun getTextInfo(id: Long): String
         suspend fun updateData(data: DictionaryEntity)
         suspend fun getCountryList(): List<DataCountry>
-        suspend fun getLearnCountText(): String
+        suspend fun getWordsCount(id: Long): Int
+        suspend fun getLearnWordsCount(id: Long): Int
     }
 
     interface View {
@@ -21,8 +21,8 @@ interface ContractDictionaryItem {
     }
 
     interface ViwModel {
-        fun openInfo(id: Long)
         fun openList()
+        fun openInfo(id: Long)
         fun loadItem(id: Long)
         fun close()
     }

@@ -5,6 +5,7 @@
     <string name="text_arxive">Arxive</string>
     <string name="text_info">App Info</string>
 
+    <string name="text_clear_all">Clear All</string>
     <string name="text_ch_language">Change Language</string>
     <string name="text_actionbar_country">Countries</string>
     <string name="button_text_cancel">Cancel</string>
@@ -12,7 +13,12 @@
     <string name="text_delete">delete</string>
     <string name="text_item_dictionary">Dictionary</string>
     <string name="text_actionbar_dictionary">Dictionaries</string>
-    <string name="text_dictionary_info">dictionary Info</string>
+    <string name="text_dictionary_info">Dictionary Info</string>
+    <string name="done">Done</string>
+
+    <string name="example">Example</string>
+
+    <string name="first_to_second"><![CDATA[First <-> Second]]></string>
 
     <string name="text_game">Game</string>
 
@@ -42,4 +48,5 @@
     <string name="text_button_open_list">Word List</string>
     <string name="text_w_first">Word First</string>
     <string name="text_w_second">Word Second</string>
+    <string name="second_to_first"><![CDATA[Second <-> First]]></string>
 </resources>

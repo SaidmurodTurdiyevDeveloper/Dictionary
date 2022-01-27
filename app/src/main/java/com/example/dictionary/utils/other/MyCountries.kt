@@ -1,4 +1,4 @@
-package com.example.dictionary.utils
+package com.example.dictionary.utils.other
 
 import com.example.dictionary.R
 import com.example.dictionary.data.model.DataCountry

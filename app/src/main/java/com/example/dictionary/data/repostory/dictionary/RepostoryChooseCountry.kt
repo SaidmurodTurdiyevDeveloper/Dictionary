@@ -3,8 +3,8 @@ package com.example.dictionary.data.repostory.dictionary
 import com.example.dictionary.contracts.dictionary.ContractChooseLanguages
 import com.example.dictionary.data.model.DataCountry
 import com.example.dictionary.data.source.local.shared.SharedDatabese
-import com.example.dictionary.utils.MyCountries
-import com.example.dictionary.utils.MyStringObjects
+import com.example.dictionary.utils.other.MyCountries
+import com.example.dictionary.utils.other.MyStringObjects
 import javax.inject.Inject
 
 class RepostoryChooseCountry @Inject constructor(
@@ -13,7 +13,6 @@ class RepostoryChooseCountry @Inject constructor(
 ) : ContractChooseLanguages.Model {
 
     override suspend fun getCountriesList(): List<DataCountry> = listCountry.getCountries()
-
 
     override suspend fun setFirstCountryId(countryId: Int) {
         storadge.setIntData(MyStringObjects.LANGUAGE_ONE, countryId)

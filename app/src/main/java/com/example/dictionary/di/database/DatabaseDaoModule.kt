@@ -1,9 +1,9 @@
 package com.example.dictionary.di.database
 
-import com.example.dictionary.data.source.local.room.MyDataBase
-import com.example.dictionary.data.source.local.room.dao.SplashDatabaseDao
+import com.example.dictionary.data.source.local.room.DictionaryDatabase
+import com.example.dictionary.data.source.local.room.dao.SplashRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.WordRoomDatabaseDao
-import com.example.dictionary.data.source.local.room.dao.dictionaries.ArxiveRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.dictionaries.ArchiveRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.DictionaryItemRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.MainRoomDatabaseDao
 import dagger.Module
@@ -14,23 +14,28 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DatabaseDaoModule {
+object DatabaseDaoModule {
 
     @Provides
-    fun getDatabaseDaoDictionaryMain(dataBase: MyDataBase): MainRoomDatabaseDao =
-        dataBase.getDictionaryDataBaseForMain()
+    @Singleton
+    fun provideMainRoomDatabaseDao(dataBase: DictionaryDatabase): MainRoomDatabaseDao =
+        dataBase.getMainDao()
 
     @Provides
-    fun getDatabaseDaoDictionaryArxive(dataBase: MyDataBase): ArxiveRoomDatabaseDao =
-        dataBase.getDictionaryDataBaseForArxive()
+    @Singleton
+    fun provideArchiveRoomDatabaseDao(dataBase: DictionaryDatabase): ArchiveRoomDatabaseDao =
+        dataBase.getArchiveDao()
 
     @Provides
-    fun getDatabaseDaoDictionaryForItems(dataBase: MyDataBase): WordRoomDatabaseDao =
-        dataBase.getWordsDataBase()
+    @Singleton
+    fun provideWordRoomDatabaseaDao(dataBase: DictionaryDatabase): WordRoomDatabaseDao =
+        dataBase.getWordsListDao()
 
     @Provides
-    fun getSplashRoomDatabaseDao(dataBase: MyDataBase): SplashDatabaseDao = dataBase.getSplashDao()
+    @Singleton
+    fun provideSplashRoomDatabaseDao(dataBase: DictionaryDatabase): SplashRoomDatabaseDao = dataBase.getSplashDao()
 
     @Provides
-    fun getDictionaryItemDao(dataBase: MyDataBase): DictionaryItemRoomDatabaseDao = dataBase.getDictionaryItemDao()
+    @Singleton
+    fun provideDictionaryItemRoomDatabaseDao(dataBase: DictionaryDatabase): DictionaryItemRoomDatabaseDao = dataBase.getDictionaryItemDao()
 }

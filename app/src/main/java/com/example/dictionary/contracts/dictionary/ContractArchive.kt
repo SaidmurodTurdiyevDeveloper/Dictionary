@@ -5,8 +5,8 @@ import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 interface ContractArchive {
     interface Model {
         suspend fun getArchiveList(): List<DictionaryEntity>
-        suspend fun delete(data: DictionaryEntity): Boolean
-        suspend fun deleteAll(list: List<DictionaryEntity>): Boolean
+        suspend fun delete(data: DictionaryEntity): Int
+        suspend fun deleteAll(list: List<DictionaryEntity>): Int
         suspend fun returnToActive(data: DictionaryEntity)
         suspend fun getItemCount(): Int
     }

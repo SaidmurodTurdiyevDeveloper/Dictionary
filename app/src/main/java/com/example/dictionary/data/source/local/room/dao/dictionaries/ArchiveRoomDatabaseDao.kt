@@ -7,7 +7,7 @@ import androidx.room.Update
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 
 @Dao
-interface ArxiveRoomDatabaseDao {
+interface ArchiveRoomDatabaseDao {
     @Query("SELECT * FROM Dictionaries Where isDelete=1")
     suspend fun getArxiveList(): List<DictionaryEntity>
 

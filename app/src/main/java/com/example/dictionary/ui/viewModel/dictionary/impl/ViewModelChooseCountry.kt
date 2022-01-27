@@ -1,11 +1,10 @@
-package com.example.dictionary.ui.viewModel.dictionary
+package com.example.dictionary.ui.viewModel.dictionary.impl
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dictionary.contracts.dictionary.ContractChooseLanguages
-import com.example.dictionary.data.model.DataMoveCountry
 import com.example.dictionary.data.model.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,11 +26,6 @@ class ViewModelChooseCountry @Inject constructor(
 
     private val _closeLiveData = MediatorLiveData<Event<Unit>>()
     val closeLiveData: LiveData<Event<Unit>> get() = _closeLiveData
-    private val _openCountryDialogOneLiveData = MediatorLiveData<Event<DataMoveCountry>>()
-    val openCountryDialogOneLiveData: LiveData<Event<DataMoveCountry>> get() = _openCountryDialogOneLiveData
-
-    private val _openCountryDialogTwoLiveData = MediatorLiveData<Event<DataMoveCountry>>()
-    val openCountryDialogTwoLiveData: LiveData<Event<DataMoveCountry>> get() = _openCountryDialogTwoLiveData
 
     init {
             viewModelScope.launch {

@@ -3,7 +3,7 @@ package com.example.dictionary.app
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.dictionary.data.source.local.shared.SharedDatabese
-import com.example.dictionary.utils.MyStringObjects
+import com.example.dictionary.utils.other.MyStringObjects
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

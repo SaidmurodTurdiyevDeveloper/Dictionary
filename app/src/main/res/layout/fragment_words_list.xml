@@ -35,13 +35,27 @@
             style="@style/Text.Title.Alternative"
             tools:text="Words"
             android:layout_width="0dp"
-            android:layout_marginRight="52dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center" />
 
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/igb_refresh"
+            style="@style/ButtonStyleBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:fitsSystemWindows="true"
+            android:focusable="true"
+            android:src="@drawable/day_night_ic_menu_more"
+            app:layout_collapseMode="pin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listWord"
@@ -52,6 +66,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/def_actionar"
         tools:listitem="@layout/item_word" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
