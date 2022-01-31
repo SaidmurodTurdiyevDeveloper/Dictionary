@@ -17,7 +17,7 @@ import com.example.dictionary.ui.adapter.AdapterDictionary
 import com.example.dictionary.ui.dialogs.DialogText
 import com.example.dictionary.ui.dialogs.DialogTwoitemChoose
 import com.example.dictionary.ui.menu.MenuArchive
-import com.example.dictionary.ui.viewModel.dictionary.impl.ViewModelArxive
+import com.example.dictionary.ui.viewModel.impl.dictionary.ViewModelArxive
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import dagger.hilt.android.AndroidEntryPoint

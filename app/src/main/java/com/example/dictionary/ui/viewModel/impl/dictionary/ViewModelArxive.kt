@@ -1,4 +1,4 @@
-package com.example.dictionary.ui.viewModel.dictionary.impl
+package com.example.dictionary.ui.viewModel.impl.dictionary
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.dictionary.contracts.dictionary.ContractArchive
 import com.example.dictionary.data.model.Event
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
-import com.example.dictionary.domen.dictionary.UseCaseArchive
+import com.example.dictionary.domen.usecase_dictionary.UseCaseArchive
 import com.example.dictionary.utils.other.Responce
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch

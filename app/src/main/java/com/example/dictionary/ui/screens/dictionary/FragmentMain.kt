@@ -26,7 +26,7 @@ import com.example.dictionary.ui.adapter.AdapterDictionary
 import com.example.dictionary.ui.dialogs.DialogDictionary
 import com.example.dictionary.ui.dialogs.DialogText
 import com.example.dictionary.ui.menu.MenuItemDictionary
-import com.example.dictionary.ui.viewModel.dictionary.impl.ViewModelMain
+import com.example.dictionary.ui.viewModel.impl.dictionary.ViewModelMain
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import com.google.android.material.navigation.NavigationView
@@ -71,16 +71,14 @@ class FragmentMain : Fragment(R.layout.fragment_main),
 
     private val openDictionaryWordListObserver = Observer<Event<Long>> { event ->
         loadOnlyOneTimeObserver(event) {
-            val action = FragmentMainDirections.actionFragmentMainToFragmentWordsLearn()
-            action.arguments.putLong("id", this)
+            val action = FragmentMainDirections.actionFragmentMainToFragmentWordsLearn(this)
             findNavController().navigate(action)
         }
     }
 
     private val openDictionaryItemObserver = Observer<Event<Long>> { event ->
         loadOnlyOneTimeObserver(event) {
-            val action = FragmentMainDirections.actionFragmentMainToFragmentDictionaryItem()
-            action.arguments.putLong("id", this)
+            val action = FragmentMainDirections.actionFragmentMainToFragmentDictionaryItem(this)
             findNavController().navigate(action)
         }
     }

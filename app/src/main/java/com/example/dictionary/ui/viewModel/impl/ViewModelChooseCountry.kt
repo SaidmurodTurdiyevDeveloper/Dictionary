@@ -1,10 +1,10 @@
-package com.example.dictionary.ui.viewModel.dictionary.impl
+package com.example.dictionary.ui.viewModel.impl
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dictionary.contracts.dictionary.ContractChooseLanguages
+import com.example.dictionary.contracts.ContractChooseLanguages
 import com.example.dictionary.data.model.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

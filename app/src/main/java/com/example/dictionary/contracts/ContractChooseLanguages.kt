@@ -1,4 +1,4 @@
-package com.example.dictionary.contracts.dictionary
+package com.example.dictionary.contracts
 
 import com.example.dictionary.data.model.DataCountry
 

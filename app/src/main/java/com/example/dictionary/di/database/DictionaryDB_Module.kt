@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MyDatabaseModule {
+object DictionaryDB_Module {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): DictionaryDatabase =

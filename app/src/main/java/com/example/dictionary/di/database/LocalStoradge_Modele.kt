@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LocalStoradgeModele {
+object LocalStoradge_Modele {
     @Provides
     @Singleton
     fun provideSharedDatabase(@ApplicationContext context: Context): SharedDatabese =

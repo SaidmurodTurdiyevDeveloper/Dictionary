@@ -1,6 +1,6 @@
-package com.example.dictionary.data.repostory.dictionary
+package com.example.dictionary.data.repostory
 
-import com.example.dictionary.contracts.dictionary.ContractChooseLanguages
+import com.example.dictionary.contracts.ContractChooseLanguages
 import com.example.dictionary.data.model.DataCountry
 import com.example.dictionary.data.source.local.shared.SharedDatabese
 import com.example.dictionary.utils.other.MyCountries

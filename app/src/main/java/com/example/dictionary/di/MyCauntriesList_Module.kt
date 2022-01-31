@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MyCauntriesListModule {
+object MyCauntriesList_Module {
     @Provides
     @Singleton
     fun provideMyCountries(): MyCountries = MyCountries()

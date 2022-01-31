@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentGame"
-        android:name="com.example.dictionary.ui.screens.dictionary.FragmentGame"
+        android:name="com.example.dictionary.ui.screens.FragmentGame"
         android:label="FragmentGame"
         tools:layout="@layout/fragment_game" />
     <fragment
@@ -98,13 +98,13 @@
         tools:layout="@layout/fragment_arxive" />
     <fragment
         android:id="@+id/fragmentSetting"
-        android:name="com.example.dictionary.ui.screens.dictionary.FragmentSetting"
+        android:name="com.example.dictionary.ui.screens.FragmentSetting"
         android:label="FragmentSetting"
         tools:layout="@layout/fragment_setting" />
 
     <fragment
         android:id="@+id/fragmentChooseLanguages"
-        android:name="com.example.dictionary.ui.screens.dictionary.FragmentChooseLanguages"
+        android:name="com.example.dictionary.ui.screens.FragmentChooseLanguages"
         android:label="FragmentChooseLanguages"
         tools:layout="@layout/fragment_select_country">
         <action
@@ -166,7 +166,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAppInfo"
-        android:name="com.example.dictionary.ui.screens.dictionary.FragmentAppInfo"
+        android:name="com.example.dictionary.ui.screens.FragmentAppInfo"
         android:label="FragmentAppInfo"
         tools:layout="@layout/fragment_app_info" />
     <fragment
@@ -206,5 +206,8 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="Id"
+            app:argType="long" />
     </fragment>
 </navigation>

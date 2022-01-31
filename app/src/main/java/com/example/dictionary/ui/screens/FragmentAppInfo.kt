@@ -1,4 +1,4 @@
-package com.example.dictionary.ui.screens.dictionary
+package com.example.dictionary.ui.screens
 
 import android.os.Bundle
 import android.view.View

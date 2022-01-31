@@ -13,7 +13,7 @@ import com.example.dictionary.data.model.Event
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.databinding.FragmentDictionaryItemBinding
 import com.example.dictionary.ui.dialogs.DialogText
-import com.example.dictionary.ui.viewModel.dictionary.impl.ViewModelDictionaryItem
+import com.example.dictionary.ui.viewModel.impl.dictionary.ViewModelDictionaryItem
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import dagger.hilt.android.AndroidEntryPoint
