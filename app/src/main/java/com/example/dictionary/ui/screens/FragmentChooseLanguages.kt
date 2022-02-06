@@ -4,55 +4,47 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.dictionary.R
 import com.example.dictionary.data.model.Event
 import com.example.dictionary.databinding.FragmentSelectCountryBinding
 import com.example.dictionary.ui.adapter.AdapterDropDown
 import com.example.dictionary.ui.viewModel.impl.ViewModelChooseCountry
-import com.example.dictionary.utils.other.MyCountries
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
+import com.example.dictionary.utils.other.MyCountries
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class FragmentChooseLanguages :
-    Fragment(R.layout.fragment_select_country) {
-    /*
-    * Null objects
-    * */
-    private var binding: FragmentSelectCountryBinding? = null
+class FragmentChooseLanguages  constructor(var defViewModel: ViewModelChooseCountry? = null) : Fragment(R.layout.fragment_select_country) {
 
-    /*
-    * ViewModel is created
-    * */
-    private val viewModel: ViewModelChooseCountry by viewModels()
+    private val binding: FragmentSelectCountryBinding by viewBinding()
+    private lateinit var viewModel: ViewModelChooseCountry
 
-    /**
-     * Adapter
-     * */
     /*
     * Observers is created
     * */
     private val _setCountryOneObserver = Observer<Event<Int>> {
         loadOnlyOneTimeObserver(it) {
-            binding?.spCountryOne?.setSelection(this)
+            binding.spCountryOne.setSelection(this)
         }
     }
 
     private val _setCountryTwoObserver = Observer<Event<Int>> {
         loadOnlyOneTimeObserver(it) {
-            binding?.spCountryTwo?.setSelection(this)
+            binding.spCountryTwo.setSelection(this)
         }
     }
 
     private val _openNextObserver = Observer<Event<Unit>> {
         val data = it.getContentIfNotHandled()
         if (data != null)
-            findNavController().navigate(FragmentChooseLanguagesDirections.actionOpenfragmentMainInChooselangiages())
+            findNavController().navigate(FragmentChooseLanguagesDirections.openMainTwo())
     }
     private val _closeObserver = Observer<Event<Unit>> {
         val data = it.getContentIfNotHandled()
@@ -60,52 +52,45 @@ class FragmentChooseLanguages :
             findNavController().navigateUp()
     }
 
-    /*
-    * Override methods
-    * */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentSelectCountryBinding.bind(view)
+        viewModel = defViewModel ?: ViewModelProvider(requireActivity())[ViewModelChooseCountry::class.java]
         registerObserver()
         loading()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     /*
     * Private Methods
     * */
     private fun loading() {
-        binding?.spCountryOne?.apply {
+        binding.spCountryOne.apply {
             val country = MyCountries()
             adapter = AdapterDropDown(requireContext(), country.getCountries())
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     viewModel.clickFirstCountry(position)
                 }
-                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
                     requireActivity().showToast("Nothing")
                 }
 
             }
         }
-        binding?.spCountryTwo?.apply {
+        binding.spCountryTwo.apply {
             val country = MyCountries()
             adapter = AdapterDropDown(requireContext(), country.getCountries())
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     viewModel.clickSecondCountry(position)
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
+                override fun onNothingSelected(parent: AdapterView<*>) {
                     requireActivity().showToast("Nothing")
                 }
 
             }
         }
-        binding?.done?.setOnClickListener { viewModel.done() }
+        binding.done.setOnClickListener { viewModel.done() }
     }
 
     private fun registerObserver() {

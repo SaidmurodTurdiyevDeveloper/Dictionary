@@ -71,13 +71,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
-                android:id="@+id/def_selecting_action_bar"
-                layout="@layout/selecting_actionbar" />
+                android:id="@+id/def_selectionActionBar"
+                layout="@layout/screen_selecting_actionbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/my_fragment"
+            android:elevation="2dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -88,22 +92,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/def_actionBar_main">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            <include
+                android:id="@+id/def_recyclerView"
+                layout="@layout/screen_recycler_view"
                 android:layout_width="match_parent"
-                android:id="@+id/spRefresh"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/listHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/item_dictionary" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/floatingBtnHome"
                 style="@style/FloatButtonStyle"
+                android:elevation="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -114,34 +113,22 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:rippleColor="@color/white" />
 
-            <TextView
-                android:id="@+id/tvError"
-                style="@style/Text.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/amarante"
-                android:textSize="24sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+            <include
+                android:id="@+id/def_error_layout"
+                layout="@layout/screen_error"
+                android:layout_width="match_parent"
+                android:elevation="1dp"
+                android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutLoadingMain"
-            android:layout_width="match_parent"
+        <include
+            android:id="@+id/def_loading"
+            layout="@layout/screen_loading"
             android:layout_height="match_parent"
-            android:background="#99000000"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:visibility="gone">
-
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/progress"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
-        </LinearLayout>
+            android:layout_width="match_parent"
+            android:elevation="6dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,7 +138,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/header_layout_menu"
+        app:headerLayout="@layout/screen_header_layout"
         app:menu="@menu/main_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

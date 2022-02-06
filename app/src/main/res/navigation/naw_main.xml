@@ -10,7 +10,7 @@
         android:label="FragmentSplash"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_fragmentSplash_to_fragmentChooseLanguages"
+            android:id="@+id/open_choose_cauntry"
             app:destination="@id/fragmentChooseLanguages"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -20,7 +20,7 @@
             app:popUpTo="@id/fragmentSplash"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_fragmentSplash_to_fragmentMain"
+            android:id="@+id/open_main"
             app:destination="@id/fragmentMain"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -36,28 +36,21 @@
         android:label="FragmentMain"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_fragmentMain_to_fragmentGame"
+            android:id="@+id/open_game"
             app:destination="@id/fragmentGame"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_fragmentMain_to_fragmentArxiv"
-            app:destination="@id/fragmentArxiv"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/action_fragmentMain_to_fragmentSetting"
+            android:id="@+id/open_setting"
             app:destination="@id/fragmentSetting"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_fragmentMain_to_fragmentChooseLanguages2"
+            android:id="@+id/open_choose_cauntry_two"
             app:destination="@id/fragmentChooseLanguages"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -65,22 +58,29 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
         <action
-            android:id="@+id/action_fragmentMain_to_fragmentAppInfo"
+            android:id="@+id/open_app_info"
             app:destination="@id/fragmentAppInfo"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_fragmentMain_to_fragmentDictionaryItem"
+            android:id="@+id/open_dictionary_itm"
             app:destination="@id/fragmentDictionaryItem"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_fragmentMain_to_fragmentWordsLearn"
+            android:id="@+id/open_dictionary_words"
             app:destination="@id/fragmentWordsLearn"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/open_archive"
+            app:destination="@id/fragmentArchive"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -91,11 +91,6 @@
         android:name="com.example.dictionary.ui.screens.FragmentGame"
         android:label="FragmentGame"
         tools:layout="@layout/fragment_game" />
-    <fragment
-        android:id="@+id/fragmentArxiv"
-        android:name="com.example.dictionary.ui.screens.dictionary.FragmentArxiv"
-        android:label="FragmentArxiv"
-        tools:layout="@layout/fragment_arxive" />
     <fragment
         android:id="@+id/fragmentSetting"
         android:name="com.example.dictionary.ui.screens.FragmentSetting"
@@ -108,7 +103,7 @@
         android:label="FragmentChooseLanguages"
         tools:layout="@layout/fragment_select_country">
         <action
-            android:id="@+id/action_openfragment_main_in_chooselangiages"
+            android:id="@+id/open_main_two"
             app:destination="@id/fragmentMain"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -123,21 +118,29 @@
         android:label="FragmentWordsLearn"
         tools:layout="@layout/fragment_words_learn">
         <action
-            android:id="@+id/action_fragmentWordsLearn_to_fragmentWordsPlay"
+            android:id="@+id/open_words_learn"
             app:destination="@id/fragmentWordsPlay"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_fragmentWordsLearn_to_fragmentWordsList"
-            app:destination="@id/fragmentWordsList" />
+            android:id="@+id/open_words_list"
+            app:destination="@id/fragmentWordsList"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="Id"
             app:argType="long" />
         <action
-            android:id="@+id/action_fragmentWordsLearn_to_wordItem"
-            app:destination="@id/wordItem" />
+            android:id="@+id/open_words_item"
+            app:destination="@id/wordItem"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/fragmentWordsList"
@@ -145,7 +148,7 @@
         android:label="FragmentWordsList"
         tools:layout="@layout/fragment_words_list">
         <action
-            android:id="@+id/action_fragmentWordsList_to_wordItem"
+            android:id="@+id/open_words_item_two"
             app:destination="@id/wordItem"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -193,14 +196,14 @@
         android:label="FragmentDictionaryItem"
         tools:layout="@layout/fragment_dictionary_item">
         <action
-            android:id="@+id/action_fragmentDictionaryItem_to_fragmentWordsList"
+            android:id="@+id/open_words_list_two"
             app:destination="@id/fragmentWordsList"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_fragmentDictionaryItem_to_fragmentDictionaryInfo"
+            android:id="@+id/open_dictionary_info"
             app:destination="@id/fragmentDictionaryInfo"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -210,4 +213,9 @@
             android:name="Id"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentArchive"
+        android:name="com.example.dictionary.ui.screens.dictionary.FragmentArchive"
+        android:label="FragmentArchive"
+        tools:layout="@layout/fragment_archive" />
 </navigation>

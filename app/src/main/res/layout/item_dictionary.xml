@@ -35,4 +35,5 @@
                 android:text="@string/text_item_dictionary" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

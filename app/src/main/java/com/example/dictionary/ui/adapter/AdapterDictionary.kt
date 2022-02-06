@@ -2,7 +2,8 @@ package com.example.dictionary.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
+import android.graphics.Color
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,10 @@ import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.databinding.ItemDictionaryBinding
 import com.example.dictionary.utils.other.MyDiffUtils
 import com.example.dictionary.utils.other.sendOneParametreBlock
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class AdapterDictionary(private var myContext: Context) :
+class AdapterDictionary @Inject constructor(@ApplicationContext private var myContext: Context) :
     RecyclerView.Adapter<AdapterDictionary.ViewHolder>() {
     private var differ = emptyList<DictionaryEntity>()
     private var listenerItem: sendOneParametreBlock<DictionaryEntity>? = null
@@ -27,7 +30,9 @@ class AdapterDictionary(private var myContext: Context) :
 
     override fun getItemCount(): Int = differ.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(differ[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(differ[position])
+    }
 
     fun submitList(ls: List<DictionaryEntity>) {
         val diffUtil = MyDiffUtils(differ, ls)
@@ -57,28 +62,25 @@ class AdapterDictionary(private var myContext: Context) :
                 )
                 true
             }
-            Log.d("TTTT", "Init$absoluteAdapterPosition")
         }
 
         @SuppressLint("ResourceAsColor")
         fun bind(data: DictionaryEntity) {
-            Log.d("TTTT", "Bind$absoluteAdapterPosition")
             binding.apply {
                 if (data.isSelect) {
                     item.setBackgroundResource(R.drawable.day_night_select_item)
                 } else {
-                    item.setBackgroundResource(R.drawable.day_night_cancel_item)
                     when {
                         data.learnPracent < 50 -> {
-                            item.setBackgroundColor(R.color.degreeOne)
+                            item.setBackgroundColor(Color.parseColor("#26FF0000"))
                         }
-                        data.learnPracent != 100 -> {
-                            item.setBackgroundColor(R.color.degreeTwo)
+                        data.learnPracent > 50 && data.learnPracent < 100 -> {
+                            item.setBackgroundColor(Color.parseColor("#26D9FF00"))
                         }
-                        else -> item.setBackgroundColor(R.color.degreeThree)
+                        else -> item.setBackgroundColor(Color.parseColor("#2604B149"))
                     }
-                    dictionaryName.text = data.name
                 }
+                dictionaryName.text = data.name
             }
         }
     }

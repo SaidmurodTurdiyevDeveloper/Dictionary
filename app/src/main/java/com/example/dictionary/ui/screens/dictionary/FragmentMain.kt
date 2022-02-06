@@ -7,11 +7,12 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,7 @@ import com.example.dictionary.R
 import com.example.dictionary.data.model.Event
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.databinding.FragmentMainBinding
-import com.example.dictionary.databinding.HeaderLayoutMenuBinding
+import com.example.dictionary.databinding.ScreenHeaderLayoutBinding
 import com.example.dictionary.ui.adapter.AdapterDictionary
 import com.example.dictionary.ui.dialogs.DialogDictionary
 import com.example.dictionary.ui.dialogs.DialogText
@@ -30,37 +31,35 @@ import com.example.dictionary.ui.viewModel.impl.dictionary.ViewModelMain
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class FragmentMain : Fragment(R.layout.fragment_main),
+class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragment(R.layout.fragment_main),
     NavigationView.OnNavigationItemSelectedListener {
 
     /*
     *      Private empty objects
     * */
     private val binding: FragmentMainBinding by viewBinding()
-    private var bindingHeader: HeaderLayoutMenuBinding? = null
+    private var bindingHeader: ScreenHeaderLayoutBinding? = null
 
-    /*
-    *       Latinent vars
-    * */
-    private lateinit var adapter: AdapterDictionary
-
-    /*
-    * ViewModel is created
-    * */
-    private val viewModel: ViewModelMain by viewModels()
+    /**
+     * ViewModel
+     * */
+    private lateinit var viewModel: ViewModelMain
+    @Inject
+    lateinit var adapter: AdapterDictionary
 
     /*
     * Observers are created
     * */
     private val loadDictionaryListObservers = Observer<Event<List<DictionaryEntity>>> {
         adapter.submitList(it.peekContent())
-        binding.spRefresh.isRefreshing = false
+        binding.defRecyclerView.spRefresh.isRefreshing = false
     }
 
     private val loadLearnCountObservers = Observer<Event<String>> { event ->
@@ -71,14 +70,14 @@ class FragmentMain : Fragment(R.layout.fragment_main),
 
     private val openDictionaryWordListObserver = Observer<Event<Long>> { event ->
         loadOnlyOneTimeObserver(event) {
-            val action = FragmentMainDirections.actionFragmentMainToFragmentWordsLearn(this)
+            val action = FragmentMainDirections.openDictionaryWords(this)
             findNavController().navigate(action)
         }
     }
 
     private val openDictionaryItemObserver = Observer<Event<Long>> { event ->
         loadOnlyOneTimeObserver(event) {
-            val action = FragmentMainDirections.actionFragmentMainToFragmentDictionaryItem(this)
+            val action = FragmentMainDirections.openDictionaryItm(this)
             findNavController().navigate(action)
         }
     }
@@ -105,7 +104,7 @@ class FragmentMain : Fragment(R.layout.fragment_main),
 
     private val openArchiveScreenObserver = Observer<Event<Unit>> {
         loadOnlyOneTimeObserver(it) {
-            findNavController().navigate(FragmentMainDirections.actionFragmentMainToFragmentArxiv())
+            findNavController().navigate(FragmentMainDirections.openArchive())
         }
     }
 
@@ -114,69 +113,68 @@ class FragmentMain : Fragment(R.layout.fragment_main),
     }
 
     private val openSettingScreenObserver = Observer<Event<Unit>> {
-        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.actionFragmentMainToFragmentSetting()) }
+        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.openSetting()) }
     }
 
     private val openGameScreenObserver = Observer<Event<Unit>> {
-        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.actionFragmentMainToFragmentGame()) }
+        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.openGame()) }
     }
 
     private val openChooseLanguageScreenObserver = Observer<Event<Unit>> {
-        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.actionFragmentMainToFragmentChooseLanguages2()) }
+        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.openChooseCauntryTwo()) }
     }
 
     private val openAppInfoScreenObserver = Observer<Event<Unit>> {
-        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.actionFragmentMainToFragmentAppInfo()) }
+        loadOnlyOneTimeObserver(it) { findNavController().navigate(FragmentMainDirections.openAppInfo()) }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     private val openAnotherActionBarObserver = Observer<Event<Unit>> { event ->
         loadOnlyOneTimeObserver(event) {
             binding.floatingBtnHome.hide()
-            binding.defSelectingActionBar.actionBar.visibility = View.VISIBLE
-            binding.actionBarHome.visibility = View.INVISIBLE
+            binding.defSelectionActionBar.selectingActionBar.isVisible = true
+            binding.actionBarHome.isVisible = false
             onBackButton(true)
             binding.drawerLayoutHome.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n", "NotifyDataSetChanged")
-    private val closeAnotherActionBarObserver = Observer<Event<Unit>> {
-        binding.floatingBtnHome.show()
-        binding.defSelectingActionBar.actionBar.visibility = View.GONE
-        binding.actionBarHome.visibility = View.VISIBLE
-        onBackButton(false)
-        unLockMenu()
+    private val closeAnotherActionBarObserver = Observer<Event<Unit>> { event ->
+        loadOnlyOneTimeObserver(event) {
+            binding.floatingBtnHome.show()
+            binding.defSelectionActionBar.selectingActionBar.isVisible = false
+            binding.actionBarHome.isVisible = true
+            onBackButton(false)
+            unLockMenu()
+        }
     }
 
     private val selectAllCheckboxObserver = Observer<Event<Boolean>> { event ->
         loadOnlyOneTimeObserver(event) {
             if (this)
-                binding.defSelectingActionBar.actionBarSelectAll.setBackgroundResource(R.drawable.day_night_ic_checked)
+                binding.defSelectionActionBar.actionBarSelectAll.setBackgroundResource(R.drawable.day_night_ic_checked)
             else
-                binding.defSelectingActionBar.actionBarSelectAll.setBackgroundResource(R.drawable.day_night_ic_checkbox)
+                binding.defSelectionActionBar.actionBarSelectAll.setBackgroundResource(R.drawable.day_night_ic_checkbox)
 
         }
     }
 
     private val loadingScreenObserever = Observer<Event<Boolean>> { event ->
         loadOnlyOneTimeObserver(event) {
+            binding.defLoading.loadingLayout.isVisible = this
             if (this) {
-                if (binding.layoutLoadingMain.visibility == View.GONE) {
-                    binding.progress.show()
-                    binding.layoutLoadingMain.visibility = View.VISIBLE
-                }
+                binding.defLoading.progress.show()
             } else {
-                if (binding.layoutLoadingMain.visibility == View.VISIBLE) {
-                    binding.progress.hide()
-                    binding.layoutLoadingMain.visibility = View.GONE
-                }
+                binding.defLoading.progress.hide()
             }
         }
     }
     private val showMessageObserver = Observer<Event<String>> { event ->
         loadOnlyOneTimeObserver(event) {
-            DialogText(requireContext(), "Message").show(this)
+            DialogText(requireContext(), "Message").submit {
+                event.block?.invoke("delete")
+            }.show(this)
         }
     }
 
@@ -188,7 +186,16 @@ class FragmentMain : Fragment(R.layout.fragment_main),
 
     private val showErrorObserver = Observer<Event<String>> { event ->
         loadOnlyOneTimeObserver(event) {
-            binding.tvError.text = this
+            binding.defErrorLayout.errorLayout.isVisible = true
+            binding.defErrorLayout.tvError.text = this
+        }
+    }
+
+    private val showSnackBarObserver = Observer<Event<String>> { event ->
+        loadOnlyOneTimeObserver(event) {
+            Snackbar.make(binding.defRecyclerView.list, this, Snackbar.LENGTH_LONG).setAction("Undo") {
+                event?.block?.invoke("Retire")
+            }.show()
         }
     }
 
@@ -196,7 +203,8 @@ class FragmentMain : Fragment(R.layout.fragment_main),
     * Override Funs
     * */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        bindingHeader = HeaderLayoutMenuBinding.bind(binding.navViewHome.getHeaderView(0)!!)
+        bindingHeader = ScreenHeaderLayoutBinding.bind(binding.navViewHome.getHeaderView(0)!!)
+        viewModel = defViewModel ?: ViewModelProvider(requireActivity())[ViewModelMain::class.java]
         registerObservers()
         loading()
         viewModel.loadData()
@@ -239,7 +247,6 @@ class FragmentMain : Fragment(R.layout.fragment_main),
         /*
         * Adapter is created
         * */
-        adapter = AdapterDictionary(requireContext())
         adapter.submitListenerItemTouch {
             viewModel.clickItem(it)
         }
@@ -262,8 +269,8 @@ class FragmentMain : Fragment(R.layout.fragment_main),
             }.show()
         }
         // Adapter connected with recyclerview
-        binding.listHome.layoutManager = LinearLayoutManager(activity)
-        binding.listHome.adapter = adapter
+        binding.defRecyclerView.list.layoutManager = LinearLayoutManager(activity)
+        binding.defRecyclerView.list.adapter = adapter
 
         /*
         * Floating Button is created
@@ -294,14 +301,14 @@ class FragmentMain : Fragment(R.layout.fragment_main),
         /*
         * Set ActionBar Listeners
         * */
-        binding.defSelectingActionBar.igbBack.setOnClickListener { viewModel.cancelSelected() }
+        binding.defSelectionActionBar.igbBack.setOnClickListener { viewModel.cancelSelected() }
 
-        binding.defSelectingActionBar.actionBarDelete.setOnClickListener { viewModel.deleteAll() }
+        binding.defSelectionActionBar.actionBarDelete.setOnClickListener { viewModel.deleteAll() }
 
-        binding.defSelectingActionBar.actionBarSelectAll.setOnClickListener {
+        binding.defSelectionActionBar.actionBarSelectAll.setOnClickListener {
             viewModel.checkAll()
         }
-        binding.spRefresh.setOnRefreshListener {
+        binding.defRecyclerView.spRefresh.setOnRefreshListener {
             viewModel.loadData()
             viewModel.loadCountLearnedWord()
         }
@@ -330,10 +337,11 @@ class FragmentMain : Fragment(R.layout.fragment_main),
         viewModel.loadingScreenLivedata.observe(viewLifecycleOwner, loadingScreenObserever)
         viewModel.showErrorLiveData.observe(viewLifecycleOwner, showErrorObserver)
         viewModel.showToastLiveData.observe(viewLifecycleOwner, showToastObserver)
+        viewModel.showSnackbarLiveData.observe(viewLifecycleOwner, showSnackBarObserver)
     }
 
     private fun floatingButton() {
-        binding.listHome.addOnScrollListener(object :
+        binding.defRecyclerView.list.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -361,10 +369,11 @@ class FragmentMain : Fragment(R.layout.fragment_main),
                 override fun handleOnBackPressed() {
                     if (isEnabled) {
                         viewModel.cancelSelected()
-                        isEnabled = false
                     } else {
-                        requireActivity().onBackPressed()
+                        findNavController().popBackStack()
                     }
+
+                    remove()
                 }
             }
             )

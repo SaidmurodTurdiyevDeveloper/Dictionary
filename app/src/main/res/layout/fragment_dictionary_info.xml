@@ -3,52 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/def_dictionary_info_layout"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/def_actionBar"
+        layout="@layout/screen_action_bar"
         android:layout_width="match_parent"
-        android:id="@+id/def_cl_action_bar"
-        android:background="@drawable/day_night_actionbar_background"
-        android:layout_height="?actionBarSize"
-        android:clickable="false"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/igb_back"
-            style="@style/ButtonStyleBorderless"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:contentDescription="@string/text_todo"
-            android:scaleType="centerCrop"
-            android:src="@drawable/day_night_ic_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/Text.Title.Alternative"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginRight="52dp"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/text_dictionary_info"
-            app:layout_constraintLeft_toRightOf="@id/igb_back"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/def_nsv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/def_cl_action_bar"
+        app:layout_constraintTop_toBottomOf="@id/def_actionBar"
         tools:ignore="SpeakableTextPresentCheck">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -71,4 +42,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fb_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/done"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <include
+        android:id="@+id/def_loading"
+        layout="@layout/screen_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="6dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

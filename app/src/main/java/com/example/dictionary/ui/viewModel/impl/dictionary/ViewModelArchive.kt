@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModelArxive @Inject constructor(private var useCase: UseCaseArchive) :
+class ViewModelArchive @Inject constructor(private var useCase: UseCaseArchive) :
     ContractArchive.ViewModel, ViewModel() {
 
     private val _loadAllDataLiveData = MediatorLiveData<Event<List<DictionaryEntity>>>()
@@ -98,7 +98,7 @@ class ViewModelArxive @Inject constructor(private var useCase: UseCaseArchive) :
     }
 
     override fun clearAll() {
-        _openDialogDeleteAllLiveData.postValue(Event(Unit, {
+        _openDialogDeleteAllLiveData.postValue(Event(Unit) {
             viewModelScope.launch {
                 useCase.deleteAll().onEach {
                     when (it) {
@@ -123,7 +123,7 @@ class ViewModelArxive @Inject constructor(private var useCase: UseCaseArchive) :
                     _showMessageEmptyLiveData.postValue(Event("Error please try again"))
                 }.launchIn(viewModelScope)
             }
-        }))
+        })
     }
 
     override fun back() = _backLiveData.postValue(Event(Unit))

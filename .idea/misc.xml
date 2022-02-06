@@ -60,9 +60,12 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/splash_logo_bg.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/activity_main.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_chooce.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_choose.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_dictionary.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_text.xml" value="0.21927083333333333" />
-        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_app_info.xml" value="0.2675970873786408" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_app_info.xml" value="0.152" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_app_info1.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_archive.xml" value="0.12952898550724637" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_arxive.xml" value="0.2" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_dictionary_info.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_dictionary_item.xml" value="0.21927083333333333" />
@@ -82,6 +85,14 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/item_dictionary.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/item_drop_down_country.xml" value="0.18297101449275363" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/item_word.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/loading_screen.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_action_bar.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_error.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_header_layout.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_loading.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_recycler_view.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_selecting_actionbar.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_spinner_country.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/selecting_actionbar.xml" value="0.11865942028985507" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/spinner_country_bg.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/menu/main_menu.xml" value="0.21927083333333333" />

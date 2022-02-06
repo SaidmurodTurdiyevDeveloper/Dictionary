@@ -16,7 +16,7 @@ class ViewModelChooseCountry @Inject constructor(
 ) : ContractChooseLanguages.ViewModel, ViewModel() {
 
     private val _loadCountryOneLiveData = MediatorLiveData<Event<Int>>()
-    val loadCountryOneLiveData: LiveData<Event<Int>> get() = _loadCountryOneLiveData
+    val loadCountryOneLiveData: LiveData<Event<Int>> = _loadCountryOneLiveData
 
     private val _loadCountryTwoLiveData = MediatorLiveData<Event<Int>>()
     val loadCountryTwoLiveData: LiveData<Event<Int>> get() = _loadCountryTwoLiveData

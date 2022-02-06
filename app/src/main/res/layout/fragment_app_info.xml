@@ -1,56 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutDescription="@xml/fragment_app_info_scene">
+    android:id="@+id/def_app_info_layout"
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/def_cl_action_bar"
+    <include
+        android:id="@+id/def_actionBar"
+        layout="@layout/screen_action_bar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@drawable/day_night_actionbar_background"
-        android:clickable="false"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/igb_back"
-            style="@style/ButtonStyleBorderless"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:contentDescription="@string/text_todo"
-            android:scaleType="centerCrop"
-            android:src="@drawable/day_night_ic_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/Text.Title.Alternative"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="52dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/text_title"
-            app:layout_constraintLeft_toRightOf="@id/igb_back"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/def_nsv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/def_cl_action_bar"
-        tools:ignore="SpeakableTextPresentCheck">
+        app:layout_constraintTop_toBottomOf="@id/def_actionBar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,8 +26,9 @@
 
             <TextView
                 android:id="@+id/tv_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.motion.widget.MotionLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

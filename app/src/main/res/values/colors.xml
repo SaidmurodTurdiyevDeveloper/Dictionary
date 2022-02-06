@@ -16,9 +16,9 @@
     <color name="my_background_light">#8E36C5</color>
     <color name="black_transparent">#66000000</color>
     <color name="red_transparent">#1AFF0000</color>
-    <color name="degreeOne">#1AED0000</color>
-    <color name="degreeTwo">#1AFFB700</color>
-    <color name="degreeThree">#1A00FF66</color>
+    <color name="degreeOne">#26FF0000</color>
+    <color name="degreeTwo">#26D9FF00</color>
+    <color name="degreeThree">#2604B149</color>
     <color name="text_color_light">#D2C8AF</color>
     <color name="text_color_dark">#0A1112</color>
     <color name="ic_bg_night">#000000</color>

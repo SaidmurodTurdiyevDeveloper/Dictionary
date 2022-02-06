@@ -27,8 +27,8 @@ class DialogText(context: Context, name: String) {
                 listener?.invoke()
                 dialog.dismiss()
             }
-            it.igbBack.setOnClickListener { dialog.dismiss() }
-            it.tvTitle.text = name
+            it.defActionBar.igbBack.setOnClickListener { dialog.dismiss() }
+            it.defActionBar.tvTitle.text = name
         }
     }
 

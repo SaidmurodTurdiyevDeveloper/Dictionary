@@ -73,20 +73,23 @@ class ViewModelMain @Inject constructor(
     private val _selectCheckBoxWhichSelectAll = MutableLiveData<Event<Boolean>>()
     val selectCheckBoxWhichSelectAll: LiveData<Event<Boolean>> get() = _selectCheckBoxWhichSelectAll
 
-    private val _showMessageLiveData = MutableLiveData<Event<String>>()
-    val showMessageLiveData: LiveData<Event<String>> get() = _showMessageLiveData
-
     private val _loadingScreenLivedata = MutableLiveData<Event<Boolean>>()
     val loadingScreenLivedata: LiveData<Event<Boolean>> get() = _loadingScreenLivedata
 
     private val _openDictionaryItemLiveData = MutableLiveData<Event<Long>>()
     val openDictionaryItemLiveData: LiveData<Event<Long>> get() = _openDictionaryItemLiveData
 
+    private val _showMessageDialogLiveData = MutableLiveData<Event<String>>()
+    val showMessageLiveData: LiveData<Event<String>> get() = _showMessageDialogLiveData
+
     private val _showToastLiveData = MutableLiveData<Event<String>>()
     val showToastLiveData: LiveData<Event<String>> get() = _showToastLiveData
 
     private val _showErrorLiveData = MutableLiveData<Event<String>>()
     val showErrorLiveData: LiveData<Event<String>> get() = _showErrorLiveData
+
+    private val _showSnackbarLiveData = MutableLiveData<Event<String>>()
+    val showSnackbarLiveData: LiveData<Event<String>> get() = _showSnackbarLiveData
 
     override fun loadData() {
         viewModelScope.launch {
@@ -99,7 +102,7 @@ class ViewModelMain @Inject constructor(
             useCase.getCountLearnedWords().onEach {
                 _loadCountLearnWordsLiveData.postValue(Event(it))
             }.catch {
-                _showMessageLiveData.postValue(Event("Words could not find which of learned"))
+                _showToastLiveData.postValue(Event("Words could not find which of learned"))
             }
         }
     }
@@ -118,9 +121,16 @@ class ViewModelMain @Inject constructor(
     override fun delete(data: DictionaryEntity) {
         _deleteLiveData.postValue(Event(data) { dictionaryEntity ->
             viewModelScope.launch {
-                loadFlow(useCase.removeDictionaryActive(dictionaryEntity)) {
-                    _loadDictionaryListLiveData.postValue(Event(it))
-                    _showToastLiveData.postValue(Event("Delete"))
+                loadFlow(useCase.removeDictionaryActive(dictionaryEntity)) {firstlist->
+                    _loadDictionaryListLiveData.postValue(Event(firstlist))
+                    _showSnackbarLiveData.postValue(Event("${data.name} is deleted") {
+                        viewModelScope.launch {
+                            loadFlow(useCase.returnItemDictionary(data)) {secondList->
+                                _loadDictionaryListLiveData.postValue(Event(secondList))
+                                _showToastLiveData.postValue(Event("Returned"))
+                            }
+                        }
+                    })
                 }
             }
         })
@@ -128,7 +138,9 @@ class ViewModelMain @Inject constructor(
 
     override fun dayNightClick() {
         viewModelScope.launch {
-            useCase.changeDayNight().onEach { _dayNightClickLiveData.postValue(Event(it)) }.catch { _showMessageLiveData.postValue(Event("Day night is wrong")) }.launchIn(viewModelScope)
+            useCase.changeDayNight().onEach { _dayNightClickLiveData.postValue(Event(it)) }.catch {
+                _showToastLiveData.postValue(Event("Day night is wrong"))
+            }.launchIn(viewModelScope)
         }
     }
 
@@ -138,7 +150,7 @@ class ViewModelMain @Inject constructor(
             viewModelScope.launch {
                 loadFlow(useCase.addDictionary(data)) { list ->
                     _loadDictionaryListLiveData.postValue(Event(list))
-                    _showToastLiveData.postValue(Event("New Item Add"))
+                    _showToastLiveData.postValue(Event("New Item Added"))
                 }
             }
         })
@@ -180,15 +192,23 @@ class ViewModelMain @Inject constructor(
     }
 
     override fun deleteAll() {
-        val size = useCase.selectedItemcount()
-        _showMessageLiveData.postValue(Event("$size items can be deleted", {
+        val items = useCase.selectedItems()
+        _showMessageDialogLiveData.postValue(Event("${items.size} items can be deleted") {
             viewModelScope.launch {
-                loadFlow(useCase.deleteSelectedList()) {
-                    _loadDictionaryListLiveData.postValue(Event(it))
+                loadFlow(useCase.deleteSelectedList()) { list ->
+                    _loadDictionaryListLiveData.postValue(Event(list))
                     _closeAnotherActionBarLiveData.postValue(Event(Unit))
+                    _showSnackbarLiveData.postValue(Event("${items.size} items deleted") {
+                        viewModelScope.launch {
+                            loadFlow(useCase.returnListDictionary(items)) {
+                                _loadDictionaryListLiveData.postValue(Event(it))
+                                _showToastLiveData.postValue(Event("Returned"))
+                            }
+                        }
+                    })
                 }
             }
-        }))
+        })
     }
 
     override fun checkAll() {
@@ -196,7 +216,6 @@ class ViewModelMain @Inject constructor(
         loadFlow(useCase.selectAllItem(isSelectAllItem)) {
             _loadDictionaryListLiveData.postValue(Event(it))
             _selectCheckBoxWhichSelectAll.postValue(Event(isSelectAllItem))
-            _showToastLiveData.postValue(Event("Select all"))
         }
     }
 
@@ -206,7 +225,7 @@ class ViewModelMain @Inject constructor(
         isSelectItem = false
         useCase.cancelSelect()
         _closeAnotherActionBarLiveData.postValue(Event(Unit))
-        _showToastLiveData.postValue(Event("Cancel"))
+        loadData()
     }
 
     override fun openAnotherActionBar() {
@@ -221,14 +240,13 @@ class ViewModelMain @Inject constructor(
                     _loadingScreenLivedata.postValue(Event(false))
                     _loadDictionaryListLiveData.postValue(Event(emptyList()))
                     _showErrorLiveData.postValue(Event(it.error))
-                    _showToastLiveData.postValue(Event(it.error))
                 }
                 is Responce.Loading -> {
                     _loadingScreenLivedata.postValue(Event(true))
                 }
                 is Responce.Message -> {
                     _loadingScreenLivedata.postValue(Event(false))
-                    _showMessageLiveData.postValue(Event(it.message))
+                    _showToastLiveData.postValue(Event(it.message))
                 }
                 is Responce.Success -> {
                     _loadingScreenLivedata.postValue(Event(false))

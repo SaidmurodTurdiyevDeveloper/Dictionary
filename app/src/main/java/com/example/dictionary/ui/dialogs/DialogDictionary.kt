@@ -40,8 +40,8 @@ class DialogDictionary(context: Context, name: String = "Add") {
 
             })
 
-            bd.igbBack.setOnClickListener { dialog.dismiss() }
-            bd.tvTitle.text = name
+            bd.defActionBar.igbBack.setOnClickListener { dialog.dismiss() }
+            bd.defActionBar.tvTitle.text = name
             bd.etName.setOnFocusChangeListener { _, _ -> bd.defEtNameLayout.isErrorEnabled = false }
         }
     }
@@ -58,7 +58,7 @@ class DialogDictionary(context: Context, name: String = "Add") {
                 languageIdTwo = data.languageIdTwo
                 isDelete = data.isDelete
             }
-            bd.tvTitle.text = "Update"
+            bd.defActionBar.tvTitle.text = "Update"
         }
         dialog.show()
     }

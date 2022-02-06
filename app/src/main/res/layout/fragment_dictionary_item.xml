@@ -1,99 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/def_dictionary_item_layout"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:elevation="3dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/def_actionar"
+        <include
+            android:id="@+id/def_actionBar"
+            layout="@layout/screen_action_bar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@drawable/day_night_actionbar_background"
-            android:gravity="left|center"
-            android:orientation="horizontal"
-            tools:ignore="RtlHardcoded">
+            android:layout_height="wrap_content" />
 
-            <ImageButton
-            android:id="@+id/igb_back"
-            style="@style/ButtonStyleBorderless"
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            android:contentDescription="@string/text_todo"
-            android:fitsSystemWindows="true"
-            android:focusable="true"
-            android:src="@drawable/day_night_ic_back"
-            app:layout_collapseMode="pin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
-
-        <TextView
-            android:id="@+id/actionbar_text"
-            style="@style/Text.Title.Alternative"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
             android:layout_weight="1"
-            android:layout_marginRight="52dp"
-            android:gravity="center"
-            tools:text="item dictionary" />
+            android:orientation="horizontal"
+            android:paddingLeft="24dp"
+            android:paddingTop="24dp"
+            android:paddingRight="24dp"
+            android:paddingBottom="8dp">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/country_one_flag"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/text_todo"
+                app:layout_constraintDimensionRatio="1.5:1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ImageContrastCheck"
+                tools:src="@drawable/country_uzb" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingLeft="24dp"
-        android:layout_marginTop="24dp"
-        android:paddingTop="24dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp">
+            <ImageView
+                android:id="@+id/def_change_country"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:background="@drawable/ic_compare"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/text_todo"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintLeft_toRightOf="@id/country_one_flag"
+                app:layout_constraintRight_toLeftOf="@id/country_two_flag"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/country_one_flag"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintDimensionRatio="1.5:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/text_todo"
-            tools:background="@drawable/country_uzb"
-            tools:ignore="ImageContrastCheck" />
+            <ImageView
+                android:id="@+id/country_two_flag"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/text_todo"
+                app:layout_constraintDimensionRatio="1.5:1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/country_england_usa_mix" />
 
-        <ImageView
-            android:id="@+id/def_change_country"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/text_todo"
-            app:layout_constraintDimensionRatio="1:1"
-            android:backgroundTint="@color/white"
-            android:background="@drawable/ic_compare"
-            app:layout_constraintLeft_toRightOf="@id/country_one_flag"
-            app:layout_constraintRight_toLeftOf="@id/country_two_flag"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/country_two_flag"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintDimensionRatio="1.5:1"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/text_todo"
-            tools:background="@drawable/country_england_usa_mix" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -154,10 +124,9 @@
                 tools:ignore="TextContrastCheck"
                 tools:text="100/100\n100%" />
 
-
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonlist"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -165,42 +134,23 @@
             android:layout_marginTop="75dp"
             android:layout_marginRight="32dp"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/day_night_bg_btn"
-            android:gravity="center"
+            android:background="@drawable/animator_btn_list"
+            android:text="@string/text_button_open_list"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_chainStyle="packed">
-
-            <TextView
-                android:id="@+id/buttonlist_text"
-                style="@style/Text.Title.Alternative"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_button_open_list"
-                android:textAllCaps="true"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
+            app:layout_constraintVertical_chainStyle="packed" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutLoadingMain"
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/def_loading"
+        layout="@layout/screen_loading"
         android:layout_height="match_parent"
-        android:background="#B3000000"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:visibility="gone">
+        android:layout_width="match_parent"
+        android:elevation="6dp" />
 
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
-    </LinearLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
