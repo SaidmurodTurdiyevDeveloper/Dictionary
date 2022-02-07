@@ -1,7 +1,8 @@
-package com.example.dictionary.data.source.local.room.dao
+package com.example.dictionary.data.source.local.room.dao.word
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.example.dictionary.data.source.local.room.dao.BaseDao
 import com.example.dictionary.data.source.local.room.entity.WordEntity
 
 @Dao

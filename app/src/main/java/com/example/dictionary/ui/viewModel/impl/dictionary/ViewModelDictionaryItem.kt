@@ -12,15 +12,15 @@ import com.example.dictionary.domen.usecase_dictionary.UseCaseItemDictionary
 import com.example.dictionary.utils.other.Responce
 import com.example.dictionary.utils.other.sendOneParametreBlock
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelDictionaryItem @Inject constructor(private var useCase: UseCaseItemDictionary) : ContractDictionaryItem.ViwModel, ViewModel() {
+
+    private var dictionaryId: Long = -1
+    private lateinit var dictionary: DictionaryEntity
 
     private val _closeLivedata = MutableLiveData<Unit>()
     val closeLiveData: LiveData<Unit> get() = _closeLivedata
@@ -49,15 +49,20 @@ class ViewModelDictionaryItem @Inject constructor(private var useCase: UseCaseIt
     private val _showMessageLiveData = MutableLiveData<Event<String>>()
     val showMessageLiveData: LiveData<Event<String>> get() = _showMessageLiveData
 
-    private val _loadingScreenLivedata = MutableLiveData<Event<Boolean>>()
-    val loadingScreenLivedata: LiveData<Event<Boolean>> get() = _loadingScreenLivedata
+    private val _loadingScreenLivedata = MutableStateFlow(false)
+    val loadingScreenLivedata = _loadingScreenLivedata.asStateFlow()
+
+    private val _showSnackbarLiveData = MutableLiveData<Event<String>>()
+    val showSnackbarLiveData: LiveData<Event<String>> get() = _showSnackbarLiveData
 
     override fun openList() = _openListLiveData.postValue(Event(Unit))
 
     override fun openInfo(id: Long) = _openInfoLiveData.postValue(Event(id))
 
     override fun loadItem(id: Long) {
+        dictionaryId = id
         loadFlow(useCase.getDictionary(id)) {
+            dictionary = it
             loadFlow(useCase.getDictionaryLearnCount(id)) {
                 _loadLearnPrecentLivedata.postValue(it)
             }
@@ -76,27 +81,26 @@ class ViewModelDictionaryItem @Inject constructor(private var useCase: UseCaseIt
         flow.onEach {
             when (it) {
                 is Responce.Error -> {
-                    _loadingScreenLivedata.postValue(Event(false))
-                    _loadLivedata.postValue(DictionaryEntity(-1, "None", "Wrong", 0, 0, 0, 0))
-                    _showMessageLiveData.postValue(Event(it.error))
-                    _showToastLiveData.postValue(Event(it.error))
+                    _loadingScreenLivedata.value = false
+                    _showSnackbarLiveData.postValue(Event(it.error) {
+                        loadItem(dictionaryId)
+                    })
                 }
                 is Responce.Loading -> {
-                    _loadingScreenLivedata.postValue(Event(true))
+                    _loadingScreenLivedata.value = it.cond
                 }
                 is Responce.Message -> {
-                    _loadingScreenLivedata.postValue(Event(false))
+                    _loadingScreenLivedata.value = false
                     _showMessageLiveData.postValue(Event(it.message))
                 }
                 is Responce.Success -> {
-                    _loadingScreenLivedata.postValue(Event(false))
+                    _loadingScreenLivedata.value = false
                     succeslistener.invoke(it.data)
                 }
             }
         }.catch {
-            _loadingScreenLivedata.postValue(Event(false))
+            _loadingScreenLivedata.value = false
             _loadLivedata.postValue(DictionaryEntity(-1, "None", "Wrong", 0, 0, 0, 0))
-            _showMessageLiveData.postValue(Event("Try again"))
             _showToastLiveData.postValue(Event("Wrong!"))
         }.launchIn(viewModelScope)
     }

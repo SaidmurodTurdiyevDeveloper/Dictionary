@@ -12,7 +12,6 @@ import com.example.dictionary.ui.viewModel.impl.ViewModelSplash
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentSplash constructor(var defViewModel: ViewModelSplash? = null) : Fragment(R.layout.fragment_splash) {

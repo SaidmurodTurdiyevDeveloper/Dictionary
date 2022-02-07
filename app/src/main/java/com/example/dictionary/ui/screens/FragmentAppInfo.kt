@@ -11,7 +11,6 @@ import com.example.dictionary.databinding.FragmentAppInfoBinding
 import com.example.dictionary.ui.viewModel.ViewModelAppinfo
 import com.example.dictionary.ui.viewModel.impl.ViewModelAppInfoImplament
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentAppInfo  constructor(var defViewModel: ViewModelAppinfo? = null) : Fragment(R.layout.fragment_app_info) {

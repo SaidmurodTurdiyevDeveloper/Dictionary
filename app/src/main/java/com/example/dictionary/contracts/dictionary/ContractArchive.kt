@@ -1,6 +1,7 @@
 package com.example.dictionary.contracts.dictionary
 
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
+import kotlinx.coroutines.flow.Flow
 
 interface ContractArchive {
     interface Model {
@@ -8,7 +9,7 @@ interface ContractArchive {
         suspend fun delete(data: DictionaryEntity): Int
         suspend fun deleteAll(list: List<DictionaryEntity>): Int
         suspend fun returnToActive(data: DictionaryEntity)
-        suspend fun getItemCount(): Int
+        fun getItemCount(): Flow<Int>
     }
 
     interface ViewModel {

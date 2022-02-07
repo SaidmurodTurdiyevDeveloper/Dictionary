@@ -15,8 +15,9 @@ class DialogText(context: Context, name: String) {
     private val dialog: AlertDialog = AlertDialog.Builder(context).setView(view).create()
     private var binding: DialogTextBinding? = DialogTextBinding.bind(view)
 
-    fun submit(block: emptyBlock): DialogText {
+    fun setListener(text: String? = null, block: emptyBlock): DialogText {
         listener = block
+        binding?.btnOk?.text = text
         return this
     }
 

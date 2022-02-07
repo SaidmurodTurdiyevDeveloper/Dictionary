@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.dictionary.R
@@ -19,7 +20,9 @@ import com.example.dictionary.ui.dialogs.DialogText
 import com.example.dictionary.ui.viewModel.impl.dictionary.ViewModelDictionaryItem
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryItem? = null) : Fragment(R.layout.fragment_dictionary_item) {
@@ -65,7 +68,7 @@ class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryIt
 
     private val showMessageObserver = Observer<Event<String>> { event ->
         loadOnlyOneTimeObserver(event) {
-            DialogText(requireContext(), "Message").submit {
+            DialogText(requireContext(), "Message").setListener {
             }.show(this)
         }
     }
@@ -73,6 +76,14 @@ class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryIt
     private val showToastObserver = Observer<Event<String>> { event ->
         loadOnlyOneTimeObserver(event) {
             requireContext().showToast(this)
+        }
+    }
+
+    private val showSnackbarObserver = Observer<Event<String>> { event ->
+        loadOnlyOneTimeObserver(event) {
+            Snackbar.make(binding.defDictionaryItemLayout, this, Snackbar.LENGTH_LONG).setAction("Retry") {
+                event.block?.invoke("Retry")
+            }.show()
         }
     }
 
@@ -87,17 +98,6 @@ class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryIt
         loadOnlyOneTimeObserver(event) {
             val action = FragmentDictionaryItemDirections.openDictionaryInfo(this)
             findNavController().navigate(action)
-        }
-    }
-
-    private val loadingScreenObserever = Observer<Event<Boolean>> { event ->
-        loadOnlyOneTimeObserver(event) {
-            binding.defLoading.loadingLayout.isVisible = this
-            if (this) {
-                binding.defLoading.progress.show()
-            } else {
-                binding.defLoading.progress.hide()
-            }
         }
     }
 
@@ -125,8 +125,18 @@ class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryIt
         viewModel.openListLiveData.observe(viewLifecycleOwner, openListObserver)
         viewModel.showMessageLiveData.observe(viewLifecycleOwner, showMessageObserver)
         viewModel.showToastLiveData.observe(viewLifecycleOwner, showToastObserver)
-        viewModel.loadingScreenLivedata.observe(viewLifecycleOwner, loadingScreenObserever)
         viewModel.openInfoLiveData.observe(viewLifecycleOwner, openInfoObserver)
+        viewModel.showSnackbarLiveData.observe(viewLifecycleOwner, showSnackbarObserver)
+        lifecycleScope.launchWhenCreated {
+            viewModel.loadingScreenLivedata.collectLatest { cond ->
+                binding.defLoading.loadingLayout.isVisible = cond
+                if (cond) {
+                    binding.defLoading.progress.show()
+                } else {
+                    binding.defLoading.progress.hide()
+                }
+            }
+        }
     }
 
     private fun getUserId() {

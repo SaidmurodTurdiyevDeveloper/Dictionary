@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.pressBack
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -63,7 +62,7 @@ class FragmentArxivTest {
 
     @SuppressLint("CheckResult")
     @Test
-    fun openDeleteOrRemoveDialog() {
+    fun deleteInArchiveDialog() {
         val navCantroller = mock(NavController::class.java)
         var viewModel: ViewModelArchive? = null
         launchFragmentInHiltContainer<FragmentArchive>(fragmentFactory = fragmentFactory) {
@@ -76,6 +75,38 @@ class FragmentArxivTest {
         onView(withId(R.id.def_dialog)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_right)).perform(click())
         assertThat(viewModel?.loadAllDataLiveData?.value?.peekContent()).isEmpty()
+    }
+
+    @SuppressLint("CheckResult")
+    @Test
+    fun returnDatatoActiveDialog() {
+        val navCantroller = mock(NavController::class.java)
+        var viewModel: ViewModelArchive? = null
+        launchFragmentInHiltContainer<FragmentArchive>(fragmentFactory = fragmentFactory) {
+            Navigation.setViewNavController(requireView(), navCantroller)
+            viewModel = testDefViewModel
+        }
+        assertThat(viewModel?.loadAllDataLiveData?.value?.peekContent()).isNotEmpty()
+        onView(withId(R.id.def_dialog)).check(doesNotExist())
+        onView(withId(R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition<AdapterDictionary.ViewHolder>(0, click()))
+        onView(withId(R.id.def_dialog)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_left)).perform(click())
+        assertThat(viewModel?.loadAllDataLiveData?.value?.peekContent()).isEmpty()
+    }
+
+    @SuppressLint("CheckResult")
+    @Test
+    fun clearArchive() {
+        val navCantroller = mock(NavController::class.java)
+        var viewModel: ViewModelArchive? = null
+        launchFragmentInHiltContainer<FragmentArchive>(fragmentFactory = fragmentFactory) {
+            Navigation.setViewNavController(requireView(), navCantroller)
+            viewModel = testDefViewModel
+        }
+        onView(withId(R.id.btn_menu)).perform(click())
+        onView(withId(R.id.menu_item_clear_all)).check(matches(isDisplayed()))
+        onView(withId(R.id.menu_item_clear_all)).perform(click())
+        onView(withId(R.id.tvError)).check(matches(withText("Archive list is empty")))
     }
 
     @Test

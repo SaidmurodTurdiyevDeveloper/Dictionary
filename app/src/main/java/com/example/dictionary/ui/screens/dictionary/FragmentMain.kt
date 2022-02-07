@@ -34,6 +34,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -92,7 +93,7 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
     }
     private val deleteObserver = Observer<Event<DictionaryEntity>> { event ->
         loadOnlyOneTimeObserver(event) {
-            DialogText(requireActivity(), "Delete").submit { event.block?.invoke(this) }.show("This ${this.name} might be remove?")
+            DialogText(requireActivity(), "Delete").setListener { event.block?.invoke(this) }.show("This ${this.name} might be remove?")
         }
     }
 
@@ -136,6 +137,9 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
             binding.actionBarHome.isVisible = false
             onBackButton(true)
             binding.drawerLayoutHome.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            binding.defRecyclerView.spRefresh.setOnRefreshListener {
+                binding.defRecyclerView.spRefresh.isRefreshing = false
+            }
         }
     }
 
@@ -145,8 +149,13 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
             binding.floatingBtnHome.show()
             binding.defSelectionActionBar.selectingActionBar.isVisible = false
             binding.actionBarHome.isVisible = true
-            onBackButton(false)
+            //onBackButton(false)
             unLockMenu()
+            binding.defRecyclerView.spRefresh.isVisible = true
+            binding.defRecyclerView.spRefresh.setOnRefreshListener {
+                viewModel.loadData()
+                viewModel.loadCountLearnedWord()
+            }
         }
     }
 
@@ -160,19 +169,9 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
         }
     }
 
-    private val loadingScreenObserever = Observer<Event<Boolean>> { event ->
-        loadOnlyOneTimeObserver(event) {
-            binding.defLoading.loadingLayout.isVisible = this
-            if (this) {
-                binding.defLoading.progress.show()
-            } else {
-                binding.defLoading.progress.hide()
-            }
-        }
-    }
     private val showMessageObserver = Observer<Event<String>> { event ->
         loadOnlyOneTimeObserver(event) {
-            DialogText(requireContext(), "Message").submit {
+            DialogText(requireContext(), "Message").setListener {
                 event.block?.invoke("delete")
             }.show(this)
         }
@@ -301,7 +300,10 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
         /*
         * Set ActionBar Listeners
         * */
-        binding.defSelectionActionBar.igbBack.setOnClickListener { viewModel.cancelSelected() }
+        binding.defSelectionActionBar.igbBack.setOnClickListener {
+            requireActivity().onBackPressed()
+            //viewModel.cancelSelected()
+        }
 
         binding.defSelectionActionBar.actionBarDelete.setOnClickListener { viewModel.deleteAll() }
 
@@ -334,10 +336,19 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
         viewModel.selectCheckBoxWhichSelectAll.observe(owner, selectAllCheckboxObserver)
         viewModel.openDictionaryItemLiveData.observe(viewLifecycleOwner, openDictionaryItemObserver)
         viewModel.showMessageLiveData.observe(viewLifecycleOwner, showMessageObserver)
-        viewModel.loadingScreenLivedata.observe(viewLifecycleOwner, loadingScreenObserever)
         viewModel.showErrorLiveData.observe(viewLifecycleOwner, showErrorObserver)
         viewModel.showToastLiveData.observe(viewLifecycleOwner, showToastObserver)
         viewModel.showSnackbarLiveData.observe(viewLifecycleOwner, showSnackBarObserver)
+        lifecycleScope.launchWhenCreated {
+            viewModel.loadingScreenLivedata.collectLatest { cond ->
+                binding.defLoading.loadingLayout.isVisible = cond
+                if (cond) {
+                    binding.defLoading.progress.show()
+                } else {
+                    binding.defLoading.progress.hide()
+                }
+            }
+        }
     }
 
     private fun floatingButton() {
@@ -369,11 +380,8 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
                 override fun handleOnBackPressed() {
                     if (isEnabled) {
                         viewModel.cancelSelected()
-                    } else {
-                        findNavController().popBackStack()
+                        remove()
                     }
-
-                    remove()
                 }
             }
             )

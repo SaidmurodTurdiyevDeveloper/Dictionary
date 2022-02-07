@@ -3,10 +3,11 @@ package com.example.dictionary.data.source.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.dictionary.data.source.local.room.dao.SplashRoomDatabaseDao
-import com.example.dictionary.data.source.local.room.dao.WordRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.word.WordRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.ArchiveRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.DictionaryItemRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.MainRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.word.WordItemRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.data.source.local.room.entity.WordEntity
 
@@ -17,4 +18,5 @@ abstract class DictionaryDatabase : RoomDatabase() {
     abstract fun getWordsListDao(): WordRoomDatabaseDao
     abstract fun getSplashDao(): SplashRoomDatabaseDao
     abstract fun getDictionaryItemDao(): DictionaryItemRoomDatabaseDao
+    abstract fun getWordItemDao(): WordItemRoomDatabaseDao
 }

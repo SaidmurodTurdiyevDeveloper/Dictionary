@@ -100,10 +100,21 @@
                     android:background="#00000000"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fb_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/done"
+        android:textAlignment="center"
+        android:textColor="#5E35B1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

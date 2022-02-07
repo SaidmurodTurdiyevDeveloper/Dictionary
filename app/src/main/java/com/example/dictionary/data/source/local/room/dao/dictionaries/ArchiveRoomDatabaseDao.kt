@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Update
 import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ArchiveRoomDatabaseDao {
@@ -21,5 +22,5 @@ interface ArchiveRoomDatabaseDao {
     suspend fun update(data: DictionaryEntity)
 
     @Query("SELECT Count(id) From Dictionaries Where isDelete=1 ")
-    suspend fun getSize():Int
+    fun getSize():Flow<Int>
 }

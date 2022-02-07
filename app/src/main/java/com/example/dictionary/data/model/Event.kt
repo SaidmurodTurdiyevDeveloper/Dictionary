@@ -1,6 +1,8 @@
 package com.example.dictionary.data.model
 
-open class Event<T>(private val content: T, val block: ((T) -> Unit)? = null) {
+import com.example.dictionary.utils.other.sendOneParametreBlock
+
+open class Event<T>(private val content: T, val block: sendOneParametreBlock<T>? = null) {
 
     var hasBeenHandled = false
         private set

@@ -18,7 +18,6 @@ import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import com.example.dictionary.utils.other.MyCountries
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentChooseLanguages  constructor(var defViewModel: ViewModelChooseCountry? = null) : Fragment(R.layout.fragment_select_country) {

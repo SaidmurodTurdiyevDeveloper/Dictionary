@@ -2,10 +2,11 @@ package com.example.dictionary.di.database
 
 import com.example.dictionary.data.source.local.room.DictionaryDatabase
 import com.example.dictionary.data.source.local.room.dao.SplashRoomDatabaseDao
-import com.example.dictionary.data.source.local.room.dao.WordRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.ArchiveRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.DictionaryItemRoomDatabaseDao
 import com.example.dictionary.data.source.local.room.dao.dictionaries.MainRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.word.WordItemRoomDatabaseDao
+import com.example.dictionary.data.source.local.room.dao.word.WordRoomDatabaseDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,4 +39,8 @@ object DatabaseDao_Module {
     @Provides
     @Singleton
     fun provideDictionaryItemRoomDatabaseDao(dataBase: DictionaryDatabase): DictionaryItemRoomDatabaseDao = dataBase.getDictionaryItemDao()
+
+    @Provides
+    @Singleton
+    fun provideWordItemRoomDatabaseDao(dataBase: DictionaryDatabase): WordItemRoomDatabaseDao = dataBase.getWordItemDao()
 }

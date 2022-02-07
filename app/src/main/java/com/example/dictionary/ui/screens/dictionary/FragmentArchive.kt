@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionary.R
@@ -19,7 +20,9 @@ import com.example.dictionary.ui.menu.MenuArchive
 import com.example.dictionary.ui.viewModel.impl.dictionary.ViewModelArchive
 import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -64,40 +67,37 @@ class FragmentArchive constructor(var testDefViewModel: ViewModelArchive? = null
         }
     }
 
-    private var backObserver = Observer<Event<Unit>> {
-        findNavController().navigateUp()
-    }
-
-    private var deleteAllObserver = Observer<Event<Unit>> {event->
+    private var backObserver = Observer<Event<Unit>> { event ->
         loadOnlyOneTimeObserver(event) {
-            val dialog = DialogText(requireContext(), "Clear Archive")
-            dialog.submit {
-                event.block?.invoke(Unit)
-            }
-            dialog.show("All items are deleting")
+            findNavController().navigateUp()
         }
     }
-    private var showMassageEmptyObserver = Observer<Event<String>> {
+
+    private var showMessageDialogObserver = Observer<Event<String>> { event ->
+        loadOnlyOneTimeObserver(event) {
+            val dialog = DialogText(requireContext(), "Clear Archive")
+            dialog.setListener("Clear") {
+                event.block?.invoke("Clear")
+            }
+            dialog.show(this)
+        }
+    }
+    private var showErrorMessageObserver = Observer<Event<String>> {
         loadOnlyOneTimeObserver(it) {
-            if (!binding.defErrorLayout.errorLayout.isVisible)
-                binding.defErrorLayout.errorLayout.isVisible = true
+            binding.defErrorLayout.errorLayout.isVisible = true
             binding.defErrorLayout.tvError.text = this
         }
     }
-    private var showMessage = Observer<Event<String>> {
+    private var showToastObserver = Observer<Event<String>> {
         loadOnlyOneTimeObserver(it) {
             requireActivity().showToast(this)
         }
     }
-
-    private var changeLoadingProgres = Observer<Event<Boolean>> {
-        loadOnlyOneTimeObserver(it) {
-            binding.defLoadingLayout.loadingLayout.isVisible = this
-            if (this) {
-                binding.defLoadingLayout.progress.show()
-            } else {
-                binding.defLoadingLayout.progress.hide()
-            }
+    private var showSnackbarObserever = Observer<Event<String>> { event ->
+        loadOnlyOneTimeObserver(event) {
+            Snackbar.make(binding.defArchiveLayout, this, Snackbar.LENGTH_LONG).setAction("Retry") {
+                event.block?.invoke("Retry")
+            }.show()
         }
     }
 
@@ -136,9 +136,20 @@ class FragmentArchive constructor(var testDefViewModel: ViewModelArchive? = null
         viewmodel.backLiveData.observe(viewLifecycleOwner, backObserver)
         viewmodel.itemTouchLiveData.observe(viewLifecycleOwner, itemTouchObserver)
         viewmodel.loadAllDataLiveData.observe(viewLifecycleOwner, loadingObserver)
-        viewmodel.openDialogDeleteAllLiveData.observe(viewLifecycleOwner, deleteAllObserver)
-        viewmodel.showMessageEmptyLiveData.observe(viewLifecycleOwner, showMassageEmptyObserver)
-        viewmodel.showMessageToastLiveData.observe(viewLifecycleOwner, showMessage)
-        viewmodel.loadingLiveData.observe(viewLifecycleOwner, changeLoadingProgres)
+        viewmodel.showMessageDialogLiveData.observe(viewLifecycleOwner, showMessageDialogObserver)
+        viewmodel.showErrorMessegeLiveData.observe(viewLifecycleOwner, showErrorMessageObserver)
+        viewmodel.showToastLiveData.observe(viewLifecycleOwner, showToastObserver)
+        viewmodel.showSnackBarLiveData.observe(viewLifecycleOwner, showSnackbarObserever)
+
+        lifecycleScope.launchWhenCreated {
+            viewmodel.loadingLiveData.collectLatest { cond ->
+                binding.defLoadingLayout.loadingLayout.isVisible = cond
+                if (cond) {
+                    binding.defLoadingLayout.progress.show()
+                } else {
+                    binding.defLoadingLayout.progress.hide()
+                }
+            }
+        }
     }
 }

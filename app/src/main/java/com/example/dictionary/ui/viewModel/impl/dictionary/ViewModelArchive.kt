@@ -1,7 +1,7 @@
 package com.example.dictionary.ui.viewModel.impl.dictionary
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dictionary.contracts.dictionary.ContractArchive
@@ -10,9 +10,7 @@ import com.example.dictionary.data.source.local.room.entity.DictionaryEntity
 import com.example.dictionary.domen.usecase_dictionary.UseCaseArchive
 import com.example.dictionary.utils.other.Responce
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,138 +18,93 @@ import javax.inject.Inject
 class ViewModelArchive @Inject constructor(private var useCase: UseCaseArchive) :
     ContractArchive.ViewModel, ViewModel() {
 
-    private val _loadAllDataLiveData = MediatorLiveData<Event<List<DictionaryEntity>>>()
+    private val _loadAllDataLiveData = MutableLiveData<Event<List<DictionaryEntity>>>()
     val loadAllDataLiveData: LiveData<Event<List<DictionaryEntity>>> get() = _loadAllDataLiveData
 
-    private val _itemTouchLiveData = MediatorLiveData<Event<DictionaryEntity>>()
+    private val _itemTouchLiveData = MutableLiveData<Event<DictionaryEntity>>()
     val itemTouchLiveData: LiveData<Event<DictionaryEntity>> get() = _itemTouchLiveData
 
-    private val _backLiveData = MediatorLiveData<Event<Unit>>()
+    private val _backLiveData = MutableLiveData<Event<Unit>>()
     val backLiveData: LiveData<Event<Unit>> get() = _backLiveData
 
-    private val _openDialogDeleteAllLiveData = MediatorLiveData<Event<Unit>>()
-    val openDialogDeleteAllLiveData: LiveData<Event<Unit>> get() = _openDialogDeleteAllLiveData
+    private val _showMessageDialogLiveData = MutableLiveData<Event<String>>()
+    val showMessageDialogLiveData: LiveData<Event<String>> get() = _showMessageDialogLiveData
 
-    private val _showMessageToastLiveData = MediatorLiveData<Event<String>>()
-    val showMessageToastLiveData: LiveData<Event<String>> get() = _showMessageToastLiveData
+    private val _showErrorMessegeLiveData = MutableLiveData<Event<String>>()
+    val showErrorMessegeLiveData: LiveData<Event<String>> get() = _showErrorMessegeLiveData
 
-    private val _showMessageEmptyLiveData = MediatorLiveData<Event<String>>()
-    val showMessageEmptyLiveData: LiveData<Event<String>> get() = _showMessageEmptyLiveData
+    private val _showSnackBarLiveData = MutableLiveData<Event<String>>()
+    val showSnackBarLiveData: LiveData<Event<String>> get() = _showSnackBarLiveData
 
-    private val _loadingLiveData = MediatorLiveData<Event<Boolean>>()
-    val loadingLiveData: LiveData<Event<Boolean>> get() = _loadingLiveData
+    private val _showToastLiveData = MutableLiveData<Event<String>>()
+    val showToastLiveData: LiveData<Event<String>> get() = _showToastLiveData
+
+    private val _loadingLiveData = MutableStateFlow(false)
+    val loadingLiveData: StateFlow<Boolean> = _loadingLiveData.asStateFlow()
 
     override fun itemTouch(data: DictionaryEntity) = _itemTouchLiveData.postValue(Event(data))
 
     override fun delete(data: DictionaryEntity) {
-        viewModelScope.launch {
-            useCase.delete(data).onEach {
-                when (it) {
-                    is Responce.Success -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _loadAllDataLiveData.postValue(Event(it.data))
-                    }
-                    is Responce.Error -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _showMessageToastLiveData.postValue(Event(it.error))
-                    }
-                    is Responce.Loading -> {
-                        _loadingLiveData.postValue(Event(true))
-                    }
-                    is Responce.Message -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _showMessageToastLiveData.postValue(Event(it.message))
-                    }
-                }
-            }.catch {
-                _loadingLiveData.postValue(Event(false))
-                _showMessageEmptyLiveData.postValue(Event("Error please try again"))
-            }.launchIn(viewModelScope)
+        loadFlow(useCase.delete(data)) {
+            _loadAllDataLiveData.postValue(Event(it))
         }
     }
 
     override fun returnToActive(data: DictionaryEntity) {
-        viewModelScope.launch {
-            useCase.update(data).onEach {
-                when (it) {
-                    is Responce.Success -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _loadAllDataLiveData.postValue(Event(it.data))
-                    }
-                    is Responce.Error -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _showMessageToastLiveData.postValue(Event(it.error))
-                    }
-                    is Responce.Loading -> {
-                        _loadingLiveData.postValue(Event(true))
-                    }
-                    is Responce.Message -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _showMessageEmptyLiveData.postValue(Event(it.message))
-                    }
-                }
-            }.catch {
-                _loadingLiveData.postValue(Event(false))
-                _showMessageEmptyLiveData.postValue(Event("Error please try again"))
-            }.launchIn(viewModelScope)
+        loadFlow(useCase.update(data)) {
+            _loadAllDataLiveData.postValue(Event(it))
         }
     }
 
     override fun clearAll() {
-        _openDialogDeleteAllLiveData.postValue(Event(Unit) {
-            viewModelScope.launch {
-                useCase.deleteAll().onEach {
-                    when (it) {
-                        is Responce.Success -> {
-                            _loadingLiveData.postValue(Event(false))
-                            _loadAllDataLiveData.postValue(Event(it.data))
-                        }
-                        is Responce.Error -> {
-                            _loadingLiveData.postValue(Event(false))
-                            _showMessageToastLiveData.postValue(Event(it.error))
-                        }
-                        is Responce.Loading -> {
-                            _loadingLiveData.postValue(Event(true))
-                        }
-                        is Responce.Message -> {
-                            _loadingLiveData.postValue(Event(false))
-                            _showMessageToastLiveData.postValue(Event(it.message))
-                        }
+        viewModelScope.launch {
+            useCase.getSize().collect { size ->
+                _showMessageDialogLiveData.postValue(Event("$size is can be delete") {
+                    loadFlow(useCase.deleteAll()) { list ->
+                        _loadAllDataLiveData.postValue(Event(list))
                     }
-                }.catch {
-                    _loadingLiveData.postValue(Event(false))
-                    _showMessageEmptyLiveData.postValue(Event("Error please try again"))
-                }.launchIn(viewModelScope)
+                })
             }
-        })
+        }
     }
 
     override fun back() = _backLiveData.postValue(Event(Unit))
 
     override fun getArchiveList() {
-        viewModelScope.launch {
-            useCase.getAllArxiveList().onEach {
-                when (it) {
-                    is Responce.Success -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _loadAllDataLiveData.postValue(Event(it.data))
-                    }
-                    is Responce.Error -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _showMessageToastLiveData.postValue(Event(it.error))
-                    }
-                    is Responce.Loading -> {
-                        _loadingLiveData.postValue(Event(true))
-                    }
-                    is Responce.Message -> {
-                        _loadingLiveData.postValue(Event(false))
-                        _showMessageEmptyLiveData.postValue(Event(it.message))
-                    }
-                }
-            }.catch {
-                _loadingLiveData.postValue(Event(false))
-                _showMessageEmptyLiveData.postValue(Event("Error please try again"))
-            }.launchIn(viewModelScope)
+        loadFlow(useCase.getAllArxiveList()) {
+            _loadAllDataLiveData.postValue(Event(it))
         }
+    }
+
+    private fun <T> loadFlow(flow: Flow<Responce<T>>, successListener: (T) -> Unit) {
+        viewModelScope.launch {
+            flow.collectLatest {
+                try {
+                    when (it) {
+                        is Responce.Message -> {
+                            _loadingLiveData.value = false
+                            _showErrorMessegeLiveData.postValue(Event(it.message))
+                        }
+                        is Responce.Success -> {
+                            _loadingLiveData.value = false
+                            successListener.invoke(it.data)
+                        }
+                        is Responce.Error -> {
+                            _loadingLiveData.value = false
+                            _showSnackBarLiveData.postValue(Event(it.error) {
+                                getArchiveList()
+                            })
+                        }
+                        is Responce.Loading -> {
+                            _loadingLiveData.value = it.cond
+                        }
+                    }
+                } catch (e: Exception) {
+                    _loadingLiveData.value = false
+                    _showToastLiveData.postValue(Event(e.message.toString()))
+                }
+            }
+        }
+
     }
 }
