@@ -15,6 +15,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Keyboard">
+        <item name="backgroundTint">@color/red_transparent</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
     <style name="Text">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
@@ -51,5 +56,13 @@
 
     <style name="ImageIconStyle">
         <item name="backgroundTint">@color/ic_bg_night</item>
+    </style>
+
+    <style name="FirstWordStyle">
+        <item name="cardBackgroundColor">#C03B0A60</item>
+    </style>
+
+    <style name="SecondWordStyle">
+        <item name="cardBackgroundColor">#BE7B0B0B</item>
     </style>
 </resources>

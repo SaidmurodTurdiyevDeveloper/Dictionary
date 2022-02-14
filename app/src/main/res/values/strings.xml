@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">My New Words</string>
 
     <string name="text_button_add">Add</string>
@@ -49,4 +49,5 @@
     <string name="text_w_first">Word First</string>
     <string name="text_w_second">Word Second</string>
     <string name="second_to_first"><![CDATA[Second <-> First]]></string>
+    <string name="open_all">Open all</string>
 </resources>

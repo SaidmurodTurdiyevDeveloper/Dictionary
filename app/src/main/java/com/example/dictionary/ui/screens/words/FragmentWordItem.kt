@@ -10,22 +10,20 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.dictionary.R
 import com.example.dictionary.databinding.FragmentWordItemBinding
 import com.example.dictionary.ui.dialogs.DialogTwoitemChoose
 import com.example.dictionary.ui.viewModel.impl.word.ViewModelWordItemImplament
-import com.example.dictionary.ui.viewModel.viewmodel_word.ViewModelWordItem
+import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class FragmentWordItem constructor(var defViewModel: ViewModelWordItem? = null) : Fragment(R.layout.fragment_word_item) {
-    private lateinit var viewModel: ViewModelWordItem
+class FragmentWordItem constructor(var defViewModel: ViewModelWordItemImplament? = null) : Fragment(R.layout.fragment_word_item) {
+    private lateinit var viewModel: ViewModelWordItemImplament
     private var wordId: Long = -1
     private var isChangedText = false
     private val binding: FragmentWordItemBinding by viewBinding()
@@ -51,6 +49,7 @@ class FragmentWordItem constructor(var defViewModel: ViewModelWordItem? = null) 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.defEtExample.isErrorEnabled = false
                 viewModel.examplesTextChanged(s.toString())
             }
 
@@ -58,7 +57,7 @@ class FragmentWordItem constructor(var defViewModel: ViewModelWordItem? = null) 
                 binding.fbDone.show()
             }
         })
-        binding.etExample.setOnEditorActionListener { v, actionId, event ->
+        binding.etExample.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     val text = binding.etExample.text.toString()
@@ -82,58 +81,71 @@ class FragmentWordItem constructor(var defViewModel: ViewModelWordItem? = null) 
 
     @SuppressLint("SetTextI18n")
     private fun loadObserver() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.closeWindowFlow.collectLatest {
+        viewModel.closeWindowLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
                 findNavController().navigateUp()
             }
+        }
 
-            viewModel.exaplesTextChanged.collectLatest {
-                isChangedText = it
-            }
+        viewModel.examplesTextChangedLiveData.observe(viewLifecycleOwner) {
+            isChangedText = it
+        }
 
-            viewModel.errorFlow.collectLatest {
-                binding.fbDone.hide()
-                binding.defActionBar.tvTitle.text = "Wrong"
-                binding.etExample.setText("Empty")
-                binding.tvFirstWord.text = "None"
-                binding.tvSecondWord.text = "None"
-            }
-
-            viewModel.wordFlow.collectLatest {
-                binding.fbDone.show()
-                binding.defActionBar.tvTitle.text = "Word"
-                binding.etExample.setText(it.example)
-                binding.tvFirstWord.text = it.wordOne
-                binding.tvSecondWord.text = it.wordTwo
-            }
-
-            viewModel.loadingFlow.collectLatest {
-                binding.defLoading.loadingLayout.isVisible = it
-                if (it) {
-                    binding.defLoading.progress.show()
-                    binding.defLoading.progress.animate()
-                } else {
-                    binding.defLoading.progress.hide()
-                }
-            }
-            viewModel.showToastFlow.collectLatest {
-                requireActivity().showToast(it)
-            }
-            viewModel.snackBarFlow.collectLatest { data ->
-                Snackbar.make(binding.defWordItemLayout, data.peekContent(), Snackbar.LENGTH_LONG).setAction("Retry") {
-                    data.block?.invoke("Retry")
-                }.show()
-            }
-            viewModel.saveOrClose.collectLatest {
+        viewModel.saveOrCloseLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
                 DialogTwoitemChoose(requireContext(), "Message").submitRightChoose(
                     {
                         requireActivity().onBackPressed()
                     }, "Close"
                 ).submitLeftChoose({
-                    it.block?.invoke("Save")
-                }, "Save").show(it.peekContent())
+                    event.block?.invoke("Save")
+                }, "Save").show(event.peekContent())
             }
         }
+
+        viewModel.wordLiveData.observe(viewLifecycleOwner) {
+            binding.fbDone.show()
+            binding.defActionBar.tvTitle.text = "Word"
+            binding.etExample.setText(it.example)
+            binding.tvFirstWord.text = it.wordOne
+            binding.tvSecondWord.text = it.wordTwo
+        }
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
+                binding.fbDone.hide()
+                binding.defActionBar.tvTitle.text = "Wrong"
+                binding.defEtExample.error = this
+                binding.defEtExample.isErrorEnabled = true
+                binding.tvFirstWord.text = "None"
+                binding.tvSecondWord.text = "None"
+            }
+        }
+
+        viewModel.loadingLayoutLiveData.observe(viewLifecycleOwner) {
+            binding.defLoading.loadingLayout.isVisible = it
+            if (it) {
+                binding.defLoading.progress.show()
+                binding.defLoading.progress.animate()
+            } else {
+                binding.defLoading.progress.hide()
+            }
+        }
+
+        viewModel.toastLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
+                requireActivity().showToast(this)
+            }
+        }
+
+        viewModel.snackBarLiveData.observe(viewLifecycleOwner) { data ->
+            loadOnlyOneTimeObserver(data) {
+                Snackbar.make(binding.defWordItemLayout, this, Snackbar.LENGTH_LONG).setAction(data.text) {
+                    data.block?.invoke("Retry")
+                }.show()
+            }
+        }
+
     }
 
     private fun getWordId() {

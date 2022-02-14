@@ -37,7 +37,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/def_et_info_layout"
         android:layout_width="match_parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="@string/text_dictionary_info"
@@ -50,8 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
+            android:background="#00000000"
             android:maxLines="3"
-            android:imeOptions="actionDone"
             android:paddingStart="16dp"
             tools:ignore="RtlSymmetry,TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>

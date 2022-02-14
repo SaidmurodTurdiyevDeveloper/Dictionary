@@ -8,9 +8,11 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/color_btn_2.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/color_btn_3.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/color_btn_4.xml" value="0.23958333333333334" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/custom_background_raund.xml" value="0.15" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/day_night_bg_btn.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/day_night_cancel_item.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/day_night_ic_add.xml" value="0.23958333333333334" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/day_night_ic_done.xml" value="0.15" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/day_night_ic_menu_alternative.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/day_night_ic_menu_more.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-night/day_night_ic_next.xml" value="0.23958333333333334" />
@@ -23,6 +25,7 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-notnight/day_night_my_button.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-v23/splash_logo_bg.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23333333333333334" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/btn_background.xml" value="0.15" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/color_btn_1.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/color_btn_2.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/color_btn_3.xml" value="0.23958333333333334" />
@@ -36,6 +39,7 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/day_night_ic_checkbox.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/day_night_ic_checked.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/day_night_ic_delete.xml" value="0.23958333333333334" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/day_night_ic_done.xml" value="0.15" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/day_night_ic_menu.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/day_night_ic_menu_alternative.xml" value="0.23333333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/day_night_ic_menu_more.xml" value="0.23958333333333334" />
@@ -58,11 +62,14 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/ic_list_black.xml" value="0.23333333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/ic_settings_nav_draw_main_menu.xml" value="0.23333333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/drawable/splash_logo_bg.xml" value="0.23958333333333334" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout-land/fragment_dictionary_item.xml" value="0.18432574430823118" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout-land/fragment_words_play.xml" value="0.18432574430823118" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/activity_main.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_chooce.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_choose.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_dictionary.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_text.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/dialog_word.xml" value="0.264" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_app_info.xml" value="0.152" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_app_info1.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/fragment_archive.xml" value="0.12952898550724637" />
@@ -89,6 +96,7 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_action_bar.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_error.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_header_layout.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_keyboard.xml" value="0.176" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_loading.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_recycler_view.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/layout/screen_selecting_actionbar.xml" value="0.21927083333333333" />
@@ -99,6 +107,7 @@
         <entry key="..\:/projects/Dictionary2/app/src/main/res/menu/menu_archive.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/menu/menu_bottom_app_bar.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/menu/menu_item_dictionary.xml" value="0.21927083333333333" />
+        <entry key="..\:/projects/Dictionary2/app/src/main/res/menu/menu_item_word.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/menu/menu_word_list.xml" value="0.21927083333333333" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23958333333333334" />
         <entry key="..\:/projects/Dictionary2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23958333333333334" />

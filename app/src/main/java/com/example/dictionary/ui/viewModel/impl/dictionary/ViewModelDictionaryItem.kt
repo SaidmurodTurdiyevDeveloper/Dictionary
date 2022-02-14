@@ -63,8 +63,8 @@ class ViewModelDictionaryItem @Inject constructor(private var useCase: UseCaseIt
         dictionaryId = id
         loadFlow(useCase.getDictionary(id)) {
             dictionary = it
-            loadFlow(useCase.getDictionaryLearnCount(id)) {
-                _loadLearnPrecentLivedata.postValue(it)
+            loadFlow(useCase.getDictionaryLearnCount(id)) { s ->
+                _loadLearnPrecentLivedata.postValue(s)
             }
             viewModelScope.launch {
                 val countryFirst = useCase.getCountryWithId(it.languageIdOne)

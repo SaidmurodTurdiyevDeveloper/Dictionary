@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/word_learn_layout"
+    android:id="@+id/def_word_learn_layout"
     android:layout_height="match_parent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,7 +31,7 @@
         </LinearLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppbar"
+            android:id="@+id/def_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -54,7 +54,7 @@
                     android:gravity="center">
 
                     <ImageButton
-                        android:id="@+id/list"
+                        android:id="@+id/btn_list"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="@drawable/day_night_ic_menu_alternative"
@@ -75,7 +75,7 @@
                     android:gravity="center">
 
                     <ImageButton
-                        android:id="@+id/play"
+                        android:id="@+id/btn_play"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="@drawable/day_night_ic_play"
@@ -87,19 +87,19 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingBtnWord"
+            android:id="@+id/fb_add"
             style="@style/FloatButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/text_todo"
             android:src="@drawable/day_night_ic_add"
-            app:layout_anchor="@id/bottomAppbar"
+            app:layout_anchor="@id/def_app_bar"
             app:maxImageSize="30dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <include
-        android:id="@+id/loading"
+        android:id="@+id/def_loading"
         layout="@layout/screen_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

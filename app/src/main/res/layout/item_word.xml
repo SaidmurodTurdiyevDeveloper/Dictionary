@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:cardBackgroundColor="#33280D00"
+        style="@style/FirstWordStyle"
         app:cardCornerRadius="8dp">
 
         <LinearLayout
@@ -19,11 +19,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:paddingTop="16dp"
+            android:id="@+id/ly_word_first"
             android:paddingBottom="16dp">
 
 
             <TextView
-                android:id="@+id/nameWordOne"
+                android:id="@+id/tv_word_one"
                 style="@style/Text.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,19 +43,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:cardBackgroundColor="#33001728"
+        style="@style/SecondWordStyle"
         app:cardCornerRadius="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:id="@+id/ly_word_second"
             android:paddingTop="16dp"
+            style="@style/SecondWordStyle"
             android:paddingBottom="16dp">
 
 
             <TextView
-                android:id="@+id/nameWordTwo"
+                android:id="@+id/tv_word_two"
                 style="@style/Text.Title"
                 android:layout_width="match_parent"
                 android:maxLines="3"

@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.dictionary.R
@@ -13,16 +12,15 @@ import com.example.dictionary.databinding.FragmentDictionaryInfoBinding
 import com.example.dictionary.ui.dialogs.DialogText
 import com.example.dictionary.ui.dialogs.DialogTwoitemChoose
 import com.example.dictionary.ui.viewModel.impl.dictionary.ViewModelDictionaryInfoImplament
-import com.example.dictionary.ui.viewModel.viewmodel_dictionary.ViewModelDictionaryInfo
+import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class FragmentDictionaryInfo constructor(var defViewModel: ViewModelDictionaryInfo? = null) : Fragment(R.layout.fragment_dictionary_info) {
+class FragmentDictionaryInfo constructor(var defViewModel: ViewModelDictionaryInfoImplament? = null) : Fragment(R.layout.fragment_dictionary_info) {
 
-    private lateinit var viewModel: ViewModelDictionaryInfo
+    private lateinit var viewModel: ViewModelDictionaryInfoImplament
     private val binding: FragmentDictionaryInfoBinding by viewBinding()
     private var id: Long = -1
 
@@ -50,43 +48,58 @@ class FragmentDictionaryInfo constructor(var defViewModel: ViewModelDictionaryIn
     }
 
     private fun loadViewModelobserver() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.closeWindowFlow.collectLatest {
-                findNavController().navigateUp()
+        viewModel.toastLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
+                requireActivity().showToast(this)
             }
-            viewModel.messageFlow.collectLatest {
-                DialogText(requireContext(), "Message").setListener("Close") {
+        }
 
-                }.show(it)
+        viewModel.messageLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
+                DialogText(requireContext(), "Message").show(this)
             }
-            viewModel.dictionaryFlow.collectLatest {
-                binding.defActionBar.tvTitle.text = it.name
-                binding.etInfo.setText(it.dataInfo)
-            }
-            viewModel.saveOrDoesNotSaveDataFlow.collectLatest {
-                DialogTwoitemChoose(requireContext(), it).submitLeftChoose({
-                    viewModel.done(binding.etInfo.text.toString())
-                }, "Save").submitRightChoose({
-                    findNavController().navigateUp()
-                }, "Close").show("Do you want to save?")
-            }
-            viewModel.showToastFlow.collectLatest {
-                requireActivity().showToast(it)
-            }
-            viewModel.errorFlow.collectLatest {
-                Snackbar.make(binding.defDictionaryInfoLayout, it, Snackbar.LENGTH_LONG).setAction("Reload") {
-                    getId()
-                    viewModel.loadData(id)
+        }
+
+        viewModel.snackBarLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
+                Snackbar.make(requireContext(), binding.defDictionaryInfoLayout, this, Snackbar.LENGTH_LONG).setAction(event.text) {
+                    event.block?.invoke("Reload")
                 }.show()
             }
-            viewModel.loadingFlow.collectLatest {
-                binding.defLoading.loadingLayout.isVisible = it
-                if (it) {
-                    binding.defLoading.progress.show()
-                    binding.defLoading.progress.animate()
-                } else {
-                    binding.defLoading.progress.hide()
-                }
+        }
+
+        viewModel.closeWindowLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
+                findNavController().navigateUp()
+            }
+        }
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { event ->
+            binding.etInfo.setText(event.peekContent())
+        }
+
+        viewModel.loadingLayoutLiveData.observe(viewLifecycleOwner) {
+            binding.defLoading.loadingLayout.isVisible = it
+            if (it) {
+                binding.defLoading.progress.show()
+                binding.defLoading.progress.animate()
+            } else {
+                binding.defLoading.progress.hide()
+            }
+        }
+
+        viewModel.dictionaryLiveData.observe(viewLifecycleOwner) {
+            binding.defActionBar.tvTitle.text = it.name
+            binding.etInfo.setText(it.dataInfo)
+        }
+
+        viewModel.saveOrDoesNotSaveDataLiveData.observe(viewLifecycleOwner) { event ->
+            loadOnlyOneTimeObserver(event) {
+                DialogTwoitemChoose(requireContext(), this).submitLeftChoose({
+                    viewModel.done(binding.etInfo.text.toString())
+                }, "Save").submitRightChoose({
+                    requireActivity().onBackPressed()
+                }, "Close").show("Do you want to save?")
             }
         }
     }

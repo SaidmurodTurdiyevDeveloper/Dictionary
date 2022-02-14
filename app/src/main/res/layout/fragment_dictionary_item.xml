@@ -108,15 +108,15 @@
             android:background="@drawable/custom_background_raund"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/buttonlist"
+            app:layout_constraintBottom_toTopOf="@id/btn_list"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/percent_list_word_text"
-                android:textColor="#FFFFFF"
                 android:textSize="22sp"
+                style="@style/Keyboard"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonlist"
+            android:id="@+id/btn_list"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="32dp"

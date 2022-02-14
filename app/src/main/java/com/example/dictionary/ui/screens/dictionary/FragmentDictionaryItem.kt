@@ -22,7 +22,9 @@ import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryItem? = null) : Fragment(R.layout.fragment_dictionary_item) {
@@ -103,7 +105,7 @@ class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryIt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = defViewModel ?: ViewModelProvider(requireActivity())[ViewModelDictionaryItem::class.java]
-        anim = binding.buttonlist.background as AnimationDrawable?
+        anim = binding.btnList.background as AnimationDrawable?
         startAnim()
         getUserId()
         registerObserver()
@@ -112,7 +114,7 @@ class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryIt
 
     private fun setViewModelActions() {
         binding.defActionBar.igbBack.setOnClickListener { viewModel.close() }
-        binding.buttonlist.setOnClickListener { viewModel.openList() }
+        binding.btnList.setOnClickListener { viewModel.openList() }
         binding.textInfo.setOnClickListener { viewModel.openInfo(id) }
     }
 
@@ -127,16 +129,16 @@ class FragmentDictionaryItem constructor(var defViewModel: ViewModelDictionaryIt
         viewModel.showToastLiveData.observe(viewLifecycleOwner, showToastObserver)
         viewModel.openInfoLiveData.observe(viewLifecycleOwner, openInfoObserver)
         viewModel.showSnackbarLiveData.observe(viewLifecycleOwner, showSnackbarObserver)
-        lifecycleScope.launchWhenCreated {
-            viewModel.loadingScreenLivedata.collectLatest { cond ->
-                binding.defLoading.loadingLayout.isVisible = cond
-                if (cond) {
-                    binding.defLoading.progress.show()
-                } else {
-                    binding.defLoading.progress.hide()
-                }
+
+        viewModel.loadingScreenLivedata.onEach { cond ->
+            binding.defLoading.loadingLayout.isVisible = cond
+            if (cond) {
+                binding.defLoading.progress.show()
+            } else {
+                binding.defLoading.progress.hide()
             }
-        }
+        }.catch { requireActivity().showToast("Wrong") }.launchIn(lifecycleScope)
+
     }
 
     private fun getUserId() {

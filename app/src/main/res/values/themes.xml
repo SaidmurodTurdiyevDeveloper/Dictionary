@@ -57,4 +57,18 @@
         <item name="android:windowBackground">@drawable/splash_logo_bg</item>
         <item name="android:statusBarColor">@color/black</item>
     </style>
+
+    <style name="Keyboard">
+        <item name="backgroundTint">@color/blue_delfault</item>
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <style name="FirstWordStyle">
+        <item name="cardBackgroundColor">#CEB8F8</item>
+    </style>
+
+    <style name="SecondWordStyle">
+        <item name="cardBackgroundColor">#FBB0CA</item>
+    </style>
+
 </resources>

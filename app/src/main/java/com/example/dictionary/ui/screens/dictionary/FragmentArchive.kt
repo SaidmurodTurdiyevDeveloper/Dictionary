@@ -22,7 +22,8 @@ import com.example.dictionary.utils.extention.loadOnlyOneTimeObserver
 import com.example.dictionary.utils.extention.showToast
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -141,15 +142,14 @@ class FragmentArchive constructor(var testDefViewModel: ViewModelArchive? = null
         viewmodel.showToastLiveData.observe(viewLifecycleOwner, showToastObserver)
         viewmodel.showSnackBarLiveData.observe(viewLifecycleOwner, showSnackbarObserever)
 
-        lifecycleScope.launchWhenCreated {
-            viewmodel.loadingLiveData.collectLatest { cond ->
-                binding.defLoadingLayout.loadingLayout.isVisible = cond
-                if (cond) {
-                    binding.defLoadingLayout.progress.show()
-                } else {
-                    binding.defLoadingLayout.progress.hide()
-                }
+        viewmodel.loadingLiveData.onEach { cond ->
+            binding.defLoadingLayout.loadingLayout.isVisible = cond
+            if (cond) {
+                binding.defLoadingLayout.progress.show()
+            } else {
+                binding.defLoadingLayout.progress.hide()
             }
-        }
+        }.launchIn(lifecycleScope)
+
     }
 }

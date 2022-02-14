@@ -11,9 +11,9 @@ import com.example.dictionary.utils.other.emptyBlock
 class DialogText(context: Context, name: String) {
     @SuppressLint("InflateParams")
     private var view = LayoutInflater.from(context).inflate(R.layout.dialog_text, null, false)
-    private var listener: emptyBlock? = null
     private val dialog: AlertDialog = AlertDialog.Builder(context).setView(view).create()
     private var binding: DialogTextBinding? = DialogTextBinding.bind(view)
+    private var listener: emptyBlock? = null
 
     fun setListener(text: String? = null, block: emptyBlock): DialogText {
         listener = block

@@ -118,7 +118,7 @@
         android:label="FragmentWordsLearn"
         tools:layout="@layout/fragment_words_learn">
         <action
-            android:id="@+id/open_words_learn"
+            android:id="@+id/open_words_play"
             app:destination="@id/fragmentWordsPlay"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"

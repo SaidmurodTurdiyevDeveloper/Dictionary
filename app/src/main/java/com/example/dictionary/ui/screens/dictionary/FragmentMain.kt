@@ -34,7 +34,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -339,16 +340,16 @@ class FragmentMain constructor(var defViewModel: ViewModelMain? = null) : Fragme
         viewModel.showErrorLiveData.observe(viewLifecycleOwner, showErrorObserver)
         viewModel.showToastLiveData.observe(viewLifecycleOwner, showToastObserver)
         viewModel.showSnackbarLiveData.observe(viewLifecycleOwner, showSnackBarObserver)
-        lifecycleScope.launchWhenCreated {
-            viewModel.loadingScreenLivedata.collectLatest { cond ->
-                binding.defLoading.loadingLayout.isVisible = cond
-                if (cond) {
-                    binding.defLoading.progress.show()
-                } else {
-                    binding.defLoading.progress.hide()
-                }
+
+        viewModel.loadingScreenLivedata.onEach { cond ->
+            binding.defLoading.loadingLayout.isVisible = cond
+            if (cond) {
+                binding.defLoading.progress.show()
+            } else {
+                binding.defLoading.progress.hide()
             }
-        }
+        }.launchIn(lifecycleScope)
+
     }
 
     private fun floatingButton() {
