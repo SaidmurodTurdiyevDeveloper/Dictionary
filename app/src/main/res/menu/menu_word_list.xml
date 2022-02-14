@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/first_to_second"
+        android:title="@string/first_to_second" />
+    <item
+        android:id="@+id/second_to_first"
+        android:title="@string/second_to_first" />
+    <item
+        android:id="@+id/open_all"
+        android:title="@string/open_all" />
+</menu>

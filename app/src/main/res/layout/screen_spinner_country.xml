@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:selectableItemBackground">
+
+    <LinearLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        tools:ignore="UselessParent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            app:cardCornerRadius="12dp">
+
+            <ImageView
+                android:id="@+id/country_item_flag"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/text_todo"
+                android:scaleType="centerCrop"
+                tools:ignore="ImageContrastCheck"
+                tools:src="@drawable/country_uzb" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/country_item_text"
+            style="@style/Text.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:maxLines="1"
+            android:paddingStart="16dp"
+            android:textSize="26sp"
+            tools:ignore="RtlSymmetry"
+            tools:text="Uzbek" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actionBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/day_night_actionbar_background"
+    android:gravity="left|center"
+    tools:ignore="RtlHardcoded">
+
+    <LinearLayout
+        android:id="@+id/def_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="16dp"
+        android:gravity="left|center"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints,RtlHardcoded">
+
+        <ImageButton
+            android:id="@+id/igb_back"
+            style="@style/ButtonStyleBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:contentDescription="@string/text_todo"
+            android:fitsSystemWindows="true"
+            android:focusable="true"
+            android:src="@drawable/day_night_ic_back"
+            app:layout_collapseMode="pin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/Text.Title.Alternative"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="52dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="Title" />
+
+    </LinearLayout>
+</com.google.android.material.appbar.MaterialToolbar>

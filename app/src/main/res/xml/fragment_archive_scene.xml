@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+       <KeyFrameSet>
+           <KeyAttribute
+               motion:motionTarget="@+id/def_actionBar"
+               motion:framePosition="71"
+               android:elevation="3dp" />
+       </KeyFrameSet>
+        <OnSwipe motion:touchAnchorId="@+id/def_list" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/def_actionBar"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            motion:layout_constraintLeft_toLeftOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/btn_menu"
+            android:elevation="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            motion:layout_constraintBottom_toBottomOf="@id/def_actionBar"
+            motion:layout_constraintRight_toRightOf="@id/def_actionBar"
+            motion:layout_constraintTop_toTopOf="@id/def_actionBar"
+            motion:layout_constraintDimensionRatio="1:1" />
+    </ConstraintSet>
+</MotionScene>

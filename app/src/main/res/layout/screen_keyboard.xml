@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_keyboard"
+        style="@style/Text.Title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:text="Salom" />
+
+    <LinearLayout
+        android:id="@+id/ll_first_line"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:visibility="gone"
+        android:weightSum="10">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_first"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="Q" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_second"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="W" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_third"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="E" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_four"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="R" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_five"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="T" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_six"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="Y" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_seven"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="U" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_eigth"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="I" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_nine"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="O" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_ten"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="P" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_second_line"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="10">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_eleven"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="A" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twelve"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="S" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_thirteen"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="D" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_forteen"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="F" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_fiveteen"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="G" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_sixteen"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="H" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_seventeen"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="J" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_eighteen"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="K" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_nineteen"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="L" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#00695C"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="`" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_thired_line"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="10">
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_one"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="Z" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_two"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="X" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_three"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="C" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_four"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="V" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_five"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="B" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_six"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="N" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_seven"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="M" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_eight"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_twenty_nine"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TextContrastCheck"
+            tools:text=">" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_thirty"
+            style="@style/Keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+            tools:text="/?" />
+    </LinearLayout>
+
+</LinearLayout>
